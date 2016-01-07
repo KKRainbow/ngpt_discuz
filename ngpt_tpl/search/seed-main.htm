@@ -1,0 +1,22 @@
+<!--{template common/header}-->
+
+<!--{template search/seed-common-styles}-->
+<form class="searchform" method="post" autocomplete="off" action="source/plugin/ngpt/search.php" onsubmit="if($('scform_srchtxt')) searchFocus($('scform_srchtxt'));">
+<input type="hidden" name="formhash" value="{FORMHASH}" />
+<div class="cl w" style="margin-left: 20px;">
+    <div class="mw">
+            <!--{template search/seed-pubsearch}-->
+
+        <div class="bm bw0">
+            <!--{template search/seed-forms}-->
+        </div>
+
+    </div>
+</div>
+</form>
+
+<!--{if !empty($searchid)}-->
+<!--{template search/seed-result}-->
+<!--{/if}-->
+
+<!--{template common/footer}-->

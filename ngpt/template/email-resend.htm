@@ -1,0 +1,56 @@
+<div id="layer_resend_$loginhash" style="display: none;">
+    <h3 class="flb">
+        <em>重新发送验证邮件</em>
+        <span>
+            <!--{if !empty($_GET['infloat']) && !isset($_GET['frommessage'])}-->
+            <a href="javascript:;" class="flbc" onclick="hideWindow('login')" title="{lang close}">{lang close}</a>
+            <!--{/if}-->
+        </span>
+    </h3>
+    <form method="post" autocomplete="off" action="{$_G['siteroot']}member.php?mod=resendemail&action=resend" enctype="application/x-www-form-urlencoded">
+        <div class="c cl">
+            <div class="rfm">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th><span class="rq">*</span><label for="email">Email:</label></th>
+                        <td><input type="text" id="email" name="email" size="30" value="" class="px p_fre"/></td>
+                        <td><span style="margin-left: 5px;">请使用<a class="xi2" href="//mail.buaa.edu.cn/" target="_blank">北航邮箱</a></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="rfm">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th><span class="rq">*</span><label for="username">用户名:</label></th>
+                        <td><input type="text" id="username" name="username" size="30" value="" class="px p_fre"/></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="rfm mbw bw0">
+            <table>
+                <tbody>
+                <tr>
+                    <th></th>
+                    <td>
+                        <button class="pn pnc" type="submit" name="resendsubmit" value="true"><span>发送</span></button>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </form>
+    <div style="vertical-align: middle; text-align: center; margin-top: -15px; margin-bottom: 30px; width: 100%;">
+        <div style="width: 500px; text-align: left; margin-left: auto; margin-right: auto;">
+        <span>
+            <strong>注意：</strong><br/>
+            1、请等待发送完成，不要过多单击按钮，否则容易造成网络繁忙而导致邮件发送失败。<br/>
+            2、请登录<a class="xi2" href="//mail.buaa.edu.cn" target="_blank">北航邮箱网页客户端</a>收取邮件，<strong style="color: red;">不要</strong>用桌面邮件客户端如 Foxmail 等等收取，因为认证邮件被北航邮箱归类为垃圾邮件而不会告知桌面邮件客户端。
+        </span>
+        </div>
+    </div>
+</div>

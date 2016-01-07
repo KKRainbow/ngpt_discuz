@@ -1,0 +1,130 @@
+
+td.uibasetd {
+    vertical-align: top;
+}
+
+div.leftsidediv {
+    margin-right: 10px;
+}
+
+div.unameanduid {
+    margin-top: 10px;
+}
+
+div.rightsidediv {
+    border-left-style: solid;
+    border-left-color: lightgray;
+    border-left-width: 1px;
+    padding: 20px;
+    margin-left: 10px;
+}
+
+h2.h2ox {
+    margin-bottom: 10px;
+}
+
+.updowninfocontainer {
+    margin: 20px 50px 20px 50px;
+    padding: 20px 20px;
+    border-width: 1px;
+    border-style: dashed;
+    border-color: dimgray;
+    background: #EFEFFA;
+}
+
+table.updowninfotable {
+}
+
+tr.updownrow {
+    height: 2em;
+    line-height: 2em;
+}
+
+td.updownpic {
+    vertical-align: middle;
+    text-align: center;
+}
+
+td.updowninfoheader {
+    width: 10em;
+    font-weight: bold;
+}
+
+td.updowninfo {
+    width: 10em;
+}
+
+.passkeyregion {
+    margin: 20px 50px 20px 50px;
+    padding: 20px 20px;
+    border-width: 1px;
+    border-style: dashed;
+    border-color: dimgray;
+    background: #EFEFFA;
+}
+
+.passkeytext {
+    margin-left: 20px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-family: mono-space, sans-serif;
+}
+
+.resetpasskeybtn {
+    margin: 20px 40px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: bold;
+}
+
+.enableptbtn {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: bold;
+}
+
+.uploadcount {
+    color: #22B14C;
+    font-weight: bold;
+}
+
+.downloadcount {
+    color: #FF7F27;
+    font-weight: bold;
+}
+
+.shareratiocount {
+    font-weight: bold;
+}
+
+.normalupdowncount {
+    font-weight: bold;
+}
+
+.fakebuttonspan {
+    border-width: 1px;
+    border-color: #235994;
+    border-style: solid;
+    background-color: #2B73C3;
+    color: white;
+    font-weight: bold;
+    padding: 2px;
+}
+
+span.ptbaseinfo {
+    font-weight: bold;
+}
+
+span.ptbine {
+    color: #9943B7;
+}
+
+span.ptbibn {
+    color: firebrick;
+}
+
+span.ptbinm {
+    color: forestgreen;;
+}

@@ -1,0 +1,18 @@
+<!--{block return}-->
+<link rel="stylesheet" type="text/css" href="{$_G['siteroot']}source/plugin/ngpt/template/hooks/global/cpnav_extra2.css"/>
+<span style="float: right;">
+    您正在通过 [
+    <!--{if $iptype == PTHelper::IPV4_IN_BUAA or $iptype == PTHelper::IPV4_IN_FRIENDLY_AREAS}-->
+    <span class="ipspan ipv4" title="{$ip}">IPv4</span>
+    <!--{elseif $iptype == PTUtils::IPV6_IN_BUAA_NATIVE}-->
+    <span class="ipspan ipv6" title="{$ip}">IPv6</span>
+    <!--{elseif $iptype == PTUtils::IPV6_IN_BUAA_TEREDO}-->
+    <span class="ipspan teredo" title="{$ip}">Teredo</span>
+    <!--{elseif $iptype == PTUtils::IPV6_IN_BUAA_ISATAP}-->
+    <span class="ipspan isatap" title="{$ip}">ISATAP</span>
+    <!--{else}-->
+    <span class="ipspan wormhole" title="{$ip}">虫洞</span>
+    <!--{/if}-->
+    ] 访问本站点
+</span>
+<!--{/block}-->

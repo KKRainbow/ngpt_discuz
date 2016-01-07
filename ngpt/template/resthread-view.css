@@ -1,0 +1,87 @@
+
+/*
+    sitd: seed info - td
+    shtd: seed header - td
+    sictr: seed info container - tr [/ topmost]
+    sio: seed info - operations
+*/
+
+.seedsinfocontainer {
+    /*width: 100%;*/
+}
+
+table.seedinfot {
+    border-color: goldenrod;
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+    /* font-family: Tahoma, 'Helvetica Neue', Helvetica, Arial, 'Microsoft YaHei', "Hiragino Sans GB", STHeiti, SimHei, sans-serif; */
+}
+
+tr.sictr {
+    background-color: lightgoldenrodyellow;
+    height: 28px;
+    line-height: 28px;
+}
+
+tr.sictr td {
+    border-color: goldenrod;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+}
+
+tr.sictrm {
+    background-color: palegoldenrod;
+}
+
+tr.sictrt {
+    background-color: goldenrod;
+}
+
+.sidownseed a {
+    color: #008000;
+}
+
+.sictrt div {
+    margin-left: 10px;
+    color: #ffffff;
+    display: inline-block;
+}
+
+.shtd {
+    width: 10%;
+}
+
+.sitd {
+    width: 35%;
+}
+
+.seedinfot {
+    width: 100%;
+    font-size: 120%;
+}
+
+td.shtd div {
+    margin-left: 15px;
+}
+
+td.sitd div {
+    margin-left: 15px;
+}
+
+th.shtd div {
+    margin-left: 15px;
+}
+
+div.sio {
+    text-align: left;
+    overflow: hidden;
+}
+
+span.sio {
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+span.sio:hover, span.sio:active {
+    text-decoration: underline;
+}

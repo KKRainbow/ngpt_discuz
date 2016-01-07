@@ -1,0 +1,23 @@
+/** forum::viewthread **/
+.locked { overflow: hidden; margin: 10px 0; display: block; padding: 10px 20px 10px 44px; border: 1px solid {LITECOLOR1}; border-left-width: 4px; background: url({STYLEIMGDIR}/info.png) no-repeat 10px 8px; zoom: 1; color: {LITECOLOR1}; }
+.locked em { color:{LITECOLOR1} !important;}
+.locked a { text-decoration: none; }
+
+.showhide { overflow: hidden; border: 1px dashed {LITECOLOR1}; padding: 10px; }
+.showhide h4 { color:{LITECOLOR1} !important; }
+
+.ad .pls { height: 2px; }
+
+.ad .plc { background:{SPECIALBORDER}; }
+/** end **/
+
+/** forum::index **/
+.l_tdp{ color: {LITECOLOR1}; font-size: 12px; display: inline; width: auto; margin-top: 2px; margin-left: 5px; }
+.chart { padding-left: 22px; background: url({STYLEIMGDIR}/chart.png) no-repeat 0 50%; color: #666;}
+/** end **/
+
+/** home **/
+#ct { background-color: white; }
+.ie_all .ul_list a{ word-wrap: normal; }
+/** end **/
+

@@ -1,0 +1,317 @@
+<!--{block return}-->
+<!--
+变量相关见对应的代码文件。
+-->
+<script type="text/javascript">
+    var setAttr = function (o, k, v) {
+        if (o.setAttribute) {
+            o.setAttribute(k, v);
+        } else {
+            o[k] = v;
+        }
+    }
+
+    function showResMod(op) {
+        $('postresinfo').value = op;
+        setAttr($('resinfo'), 'action', 'resmod.php?action=display');
+        showWindow('resmod', 'resinfo', 'post', false);
+
+    }
+
+    function showResDisplay(op) {
+        $('postresinfo').value = op;
+        setAttr($('resinfo'), 'action', 'resinfodisplay.php?action=display');
+        switch(op)
+        {
+            case 'fileinfo':
+                if ($('append_parent').myload_file) {
+                    $('append_parent').myload_file();
+                }
+                showWindow('resinfodisplay_file', 'resinfo', 'post', true);
+                break;
+            case 'labelinfo':
+                showWindow('resinfodisplay_label', 'resinfo', 'post', true);
+                break;
+            case 'peerinfo':
+                showWindow('resinfodisplay_peer', 'resinfo', 'post', true);
+                if ($('append_parent').myload_peer) {
+                    $('append_parent').myload_peer();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+</script>
+<form style="display: none;" id="resinfo" method="post" action="">
+    <!-- 不知为什么，action 要保留 -->
+    <input type="hidden" name="fid" value="{$fid}"/>
+    <input type="hidden" name="tid" value="{$tid}"/>
+    <input type="hidden" name="infohash" value="{$infohash}"/>
+    <input type="hidden" name="op" id="postresinfo" value=""/>
+</form>
+<link rel="stylesheet" type="text/css" href="source/plugin/ngpt/template/resthread-view.css"/>
+<div class="seedsinfocontainer">
+    <table class="seedinfot" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr class="sictr sictrt" style="text-align: justify;">
+                <th class="shtd" colspan="4">
+                    <div>
+                        <span>种子基本信息</span>
+                    </div>
+                    <div>
+                        <span></span>
+                    </div>
+                </th>
+            </tr>
+            <tr class="sictr sictrm">
+                <td class="shtd sidownseed">
+                    <div>
+                        <span>
+                            下载种子
+                        </span>
+                    </div>
+                </td>
+                <td class="sitd sidownseed" colspan="3">
+                    <div>
+                        <span>
+                            <!--{if $seedexists}-->
+                            <!--{if $candownloadstatus == 'normal'}-->
+                            <a href="{$downseedpageurl}" style="font-weight: bold;float:left">
+                            <!--{/if}-->
+                                <span>{$filename}</span>.torrent
+                            <!--{if $candownloadstatus=='normal'}-->
+                            </a>
+                            <!--{/if}-->
+                            <!--{if $candownloadstatus != 'normal'}-->
+                            <span style="margin: 0 0 0 5px;">
+                                <!--{if $candownloadstatus == 'notenabled'}-->
+                                (您未启用PT功能)
+                                <!--{/if}-->
+                                <!--{if $candownloadstatus == 'banned'}-->
+                                (您被禁止下载)
+                                <!--{/if}-->
+                            </span>
+                            <!--{/if}-->
+                            <!--{/if}-->
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr class="sictr">
+                <td class="shtd">
+                    <div>
+                        种子大小
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        {$filesize_str}
+                    </div>
+                </td>
+                <td class="shtd">
+                    <div>
+                        文件数
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        {$filecount}
+                    </div>
+                </td>
+            </tr>
+            <tr class="sictr">
+                <td class="shtd">
+                    <div <!--{if $seeds > 0}-->style="font-weight: bold; color: blue;"<!--{/if}-->>
+                        正在做种
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div <!--{if $seeds > 0}-->style="font-weight: bold; color: blue;"<!--{/if}-->>
+                        {$seeds}
+                    </div>
+                </td>
+                <td class="shtd">
+                    <div>
+                        总流量
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        {$traffic_str}
+                    </div>
+                </td>
+            </tr>
+            <tr class="sictr">
+                <td class="shtd">
+                    <div <!--{if $leechers > 0}-->style="font-weight: bold; color: maroon;"<!--{/if}-->>
+                        正在下载
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div <!--{if $leechers > 0}-->style="font-weight: bold; color: maroon;"<!--{/if}-->>
+                        {$leechers}
+                    </div>
+                </td>
+                <td class="shtd">
+                    <div>
+                        上传系数
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        <span id="upcoefspan">
+                            {$upcoeff}
+                        </span>
+                        <span>
+                            % &nbsp&nbsp{$coef_expire}
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr class="sictr">
+                <td class="shtd">
+                    <div>
+                        下载完成
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        {$finished}
+                    </div>
+                </td>
+                <td class="shtd">
+                    <div>
+                        下载系数
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        <span id="downcoefspan">
+                            {$downcoeff}
+                        </span>
+                        <span>
+                            % &nbsp&nbsp{$coef_expire}
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr class="sictr">
+                <td class="shtd">
+                    <div>
+                        做种IP
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        {$seedingip_str}
+                    </div>
+                </td>
+                <td class="shtd">
+                    <div>
+                        发布时间
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        {$pubdate_str}
+                    </div>
+                </td>
+            </tr>
+            <tr class="sictr">
+                <td class="shtd">
+                    <div>
+                        存活时间
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        {$livetime_str}
+                    </div>
+                </td>
+                <td class="shtd">
+                    <div>
+                        最后活动
+                    </div>
+                </td>
+                <td class="sitd">
+                    <div>
+                        {$lastactive_str}
+                    </div>
+                </td>
+            </tr>
+            <tr class="sictr">
+                <td class="shtd">
+                    <div>
+                        Info Hash
+                    </div>
+                </td>
+                <td class="sitd" colspan="3">
+                    <div>
+                        {$infohash}
+                    </div>
+                </td>
+            </tr>
+            <!--{if $candownloadstatus == 'normal'}-->
+            <tr class="sictr">
+                <td class="shtd">
+                    <div>
+                        查看信息
+                    </div>
+                </td>
+                <td class="shtd" colspan="3">
+                    <div class="sio">
+                        <!--{if $candownloadstatus == 'normal'}-->
+                        <span class="sio" onclick="showResDisplay('fileinfo');" style="color: darkgreen;">
+                        <!--{/if}-->
+                            <span>
+                                <!--{if $candownloadstatus == 'normal'}-->
+                                <span style="cursor: pointer;">
+                                <!--{/if}-->
+                                文件列表
+                                <!--{if $candownloadstatus == 'normal'}-->
+                                </span>
+                                <!--{/if}-->
+                            </span>
+                        <!--{if $candownloadstatus=='normal'}-->
+                        </span>
+                        <!--{/if}-->
+                        <!--{if $candownloadstatus == 'normal'}-->
+                        <span class="sio" onclick="showResDisplay('labelinfo');" style="color: firebrick;">
+                        <!--{/if}-->
+                            <span>
+                                <!--{if $candownloadstatus == 'normal'}-->
+                                <span style="cursor: pointer;">
+                                <!--{/if}-->
+                                种子标签
+                                <!--{if $candownloadstatus == 'normal'}-->
+                                </span>
+                                <!--{/if}-->
+                            </span>
+                        <!--{if $candownloadstatus=='normal'}-->
+                        </span>
+                        <!--{/if}-->
+                        <!--{if $candownloadstatus == 'normal'}-->
+                        <span class="sio" onclick="showResDisplay('peerinfo');" style="color: midnightblue;">
+                        <!--{/if}-->
+                            <span>
+                                <!--{if $candownloadstatus == 'normal'}-->
+                                <span style="cursor: pointer;">
+                                <!--{/if}-->
+                                上传/下载用户信息
+                                <!--{if $candownloadstatus == 'normal'}-->
+                                </span>
+                                <!--{/if}-->
+                            </span>
+                        <!--{if $candownloadstatus=='normal'}-->
+                        </span>
+                        <!--{/if}-->
+                    </div>
+                </td>
+            </tr>
+            <!--{/if}-->
+        </tbody>
+    </table>
+    <div style="height: 10px;"/>
+</div>
+<!--{/block}-->

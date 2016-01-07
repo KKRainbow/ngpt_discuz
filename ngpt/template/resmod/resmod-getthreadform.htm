@@ -1,0 +1,61 @@
+<!--作用:获取目标板块的表单-->
+<!--{eval}-->
+require_once libfile('function/forumlist');
+require_once libfile('function/forum');
+//这个需要放在common-include前面,那里面用到了type
+global $_G;
+$fid = $_POST['targetfid']; //resnew里面还会用到fid.这里要hack以下
+$_G['thread']['fid'] = $fid; //loadforum会用这个赋值
+loadforum($fid,0);
+require_once DISCUZ_ROOT . '/source/plugin/ngpt/thread/resthread-new-common.php';
+
+include template("ngpt:resthread/resthread-new-{$_POST['targetfid']}");
+$form = $return;
+
+//填充fileds,让其位空,否则会报错
+$fields = 'var fields = [];';
+foreach (range(0,20) as $k){
+$fields .= "fields[{$k}] = '';";
+}
+<!--{/eval}-->
+<!--Typeid有关的东西放这里-->
+<script>
+    {$fields}
+</script>
+{$return_prepare}
+<table width="100%">
+    <!--{if $_G['forum']['threadtypes']['types']}-->
+    <tr>
+        <td>
+            <span class="ftid">
+                主题分类:&nbsp;
+            </span>
+            <span id="typeid_div" class="ftid">
+                <select id="typeid" name="typeid">
+                    <option>请选择分类</option>
+                    <!--{eval}-->
+                    $_x_counter = 0;
+                    $_types_v = ($_G['forum']['threadtypes']['types']);
+                    $flag = true;
+                    <!--{/eval}-->
+                    <!--{loop $_types_v $type_v $v}-->
+                    <!--{if $flag==true}-->
+                    <option value="{$type_v}" selected="selected">{$v}</option>
+                    <!--{eval $flag=false;}-->
+                    <!--{else}-->
+                    <option value="{$type_v}">{$v}</option>
+                    <!--{/if}-->
+                    <!--{/loop}-->
+                </select>
+            </span>
+        </td>
+    </tr>
+    <!--{/if}-->
+    <tr>
+        <td>
+            {$form}
+        </td>
+    </tr>
+</table>
+<script>
+</script>

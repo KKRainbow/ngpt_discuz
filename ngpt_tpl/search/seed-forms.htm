@@ -1,0 +1,151 @@
+<div class="bm_c" id="advsearch" style="display: none;">
+    <div>
+        <div style="float:left;">
+            <table summary="搜索" cellspacing="0" cellpadding="0" class="tfm"
+                   style="float:left;">
+                <tr>
+                    <th>{lang author}</th>
+                    <td><input type="text" name="author" id="srchname" class="px" size="25" maxlength="40" value="$author" /></td>
+                </tr>
+
+
+                <tr>
+                    <th><label for="upcoeform">上传系数</label></th>
+                    <td>
+                        <label class="lb">
+                        <input
+                            <!--{if !$upcoelarger}-->
+                            checked="checked"
+                            <!--{/if}-->
+                            type="radio" class="pr" name="upcoeorder" value="0"/>小于等于
+                        </label>
+                        <label class="lb">
+                        <input
+                            <!--{if $upcoelarger}-->
+                            checked="checked"
+                            <!--{/if}-->
+                            type="radio" class="pr" name="upcoeorder" value="1"/>
+                        大于等于</label>
+                        <select id="upcoeform" name="upcoe">
+                            <option value="0" <!--{if !isset($upcoe)||$upcoe==0}-->selected="selected"<!--{/if}-->>0%</option>
+                            <!--{eval $tmp = range(20,220,20);}-->
+                            <!--{loop $tmp $text}-->
+                            <!--{eval $value = $text/100;}-->
+                            <option value="{$value}"<!--{if $upcoe==$value}--> selected="selected"<!--{/if}-->>{$text}%</option>
+                            <!--{/loop}-->
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th><label for="downcoeform">下载系数</label></th>
+                    <td>
+                        <label class="lb"><input <!--{if !$downcoelarger}-->checked="checked" <!--{/if}-->type="radio" class="pr" name="downcoeorder" value=""/>小于等于</label>
+                        <label class="lb"><input <!--{if $downcoelarger}-->checked="checked" <!--{/if}-->type="radio" class="pr" name="downcoeorder" value="1"/>大于等于</label>
+                        <select id="downcoeform" name="downcoe">
+                            <option value="0" <!--{if !isset($downcoe)||$downcoe==0}-->selected="selected"<!--{/if}-->>0%(蓝种)</option>
+                            <!--{eval $tmp = range(20,220,20);}-->
+                            <!--{loop $tmp $text}-->
+                            <!--{eval $value = $text/100;}-->
+                            <option value="{$value}"<!--{if $downcoe==$value}--> selected="selected"<!--{/if}-->>{$text}%</option>
+                            <!--{/loop}-->
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th><label for="srchfrom">搜索时间</label></th>
+                    <td>
+                        <select id="srchfrom" name="srchfrom">
+                            <!--{eval}-->
+                            $time = array(
+                                0 => "所有时间",
+                                86400 => "一天",
+                                172800 => "2天",
+                                604800  => "7天",
+                                2592000 => "1个月",
+                                7776000 => "3个月",
+                                15552000 => "半年",
+                                31536000 => "1年"
+                            );
+                            <!--{/eval}-->
+                            <!--{loop $time $val $str}-->
+                            <option value="{$val}" <!--{if $val==$srchfrom}-->
+                            selected="selected"
+                            <!--{/if}-->>{$str}</option>
+                            <!--{/loop}-->
+                        </select>
+                        <label class="lb"><input
+                                <!--{if $before!=1}-->
+                                checked="checked"
+                                <!--{/if}-->
+                                type="radio" class="pr" name="before" value=""/>以内</label>
+                        <label class="lb"><input
+                                <!--{if $before==1}-->
+                                checked="checked"
+                                <!--{/if}-->
+                                type="radio" class="pr" name="before" value="1"/>以前</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th><label for="orderby">搜索排序</label></th>
+                    <td>
+                        <select id="orderby" name="orderby" class="ps">
+                            <!--{eval}-->
+                            $time = array(
+                                'lastpost' => '回复时间',
+                                'dateline' => '发布时间',
+                                'replies' => '回复数量',
+                                'views' => '浏览次数'
+                            );
+                            <!--{/eval}-->
+                            <!--{loop $time $val $str}-->
+                            <option value="{$val}" <!--{if $val==$orderby}-->
+                            selected="selected"
+                            <!--{/if}-->>{$str}</option>
+                            <!--{/loop}-->
+                        </select>
+                        <label class="lb"><input
+                                <!--{if $ascdesc=='asc'}-->
+                                checked="checked"
+                                <!--{/if}-->
+                                type="radio" class="pr" name="ascdesc" value="asc" />升序排列</label>
+                        <label class="lb"><input
+                                <!--{if $ascdesc!='asc'}-->
+                                checked="checked"
+                                <!--{/if}-->
+                                type="radio" class="pr" name="ascdesc" value="desc"/>降序排列</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="float:left;width:5%;margin-right: 10px;visibility: hidden;">Hidden</div>
+
+        <div style="float:left;">
+            <table summary="{lang search}" cellspacing="0" cellpadding="0" class="tfm"
+            <tr>
+                <th valign="top"><label for="srchfid">搜索范围</label></th>
+                <td>
+                    <select id="srchfid" name="srchfid[]" multiple="multiple" size="10" style="width: 26em;">
+                        <option value="all"{if !$srchfid} selected="selected"{/if}>全部资源</option>
+                        $forumselect
+                    </select>
+                    <br/>
+                    <span>(按Ctrl或Shift键可以多选,不选择)</span>
+                </td>
+            </tr>
+            </table>
+        </div>
+        <div style="clear: both;text-align: center;">
+            <input type="hidden" name="searchsubmit" value="yes" />
+            <button type="submit" class="pn pnc"><strong>{lang search}</strong></button>
+             <a href="search.php?mod=seed">
+                 <button type="button" class="pn pnc">
+                     <strong>重置</strong>
+                 </button>
+             </a>
+        </div>
+    </div>
+</div>

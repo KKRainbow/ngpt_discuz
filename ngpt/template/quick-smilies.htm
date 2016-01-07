@@ -1,0 +1,35 @@
+<!--{if 1}-->
+<script type="text/javascript" src="{$_G['siteroot']}source/plugin/ngpt/static/js/quick-smilies.js"></script>
+<!--{if !empty($_GET['infloat']) && $_GET['infloat']}-->
+<!--{/if}-->
+<div id="{$smlid}" class="">
+</div>
+<script type="text/javascript" reload="1">
+    //没办法了= =
+    $("{$smlid}").innerHTML = '';
+    setInterval(function () {
+        var smlid = $("{$smlid}");
+        if(smlid && strlen(smlid.innerHTML) <= 10)
+        {
+            _qsmilies_show("{$smlid}", 12,'{$editorid}');
+            // 如果是在快速回复框中显示的，就让其居中
+            (function () {
+                var fwin = $('fwin_reply');
+                if (fwin) {
+                    var dW = document.documentElement.clientWidth;
+                    var dH = document.documentElement.clientHeight;
+                    var w = fwin.offsetWidth;
+                    var h = fwin.offsetHeight;
+                    var l = parseInt((dW - w) / 2);
+                    var t = parseInt((dH - h) / 2);
+                    // 防止无法操作
+                    if (l < 0) l = 0;
+                    if (t < 0) t = 0;
+                    fwin.style.left = l + 'px';
+                    fwin.style.top = t + 'px';
+                }
+            })();
+        }
+    }, 550);
+</script>
+<!--{/if}-->

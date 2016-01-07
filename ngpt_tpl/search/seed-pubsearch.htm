@@ -1,0 +1,57 @@
+<table id="scform" class="mbm" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>
+            <div id="scform_tb" class="cl">
+                <!--{if CURMODULE == 'forum'}-->
+						<span class="y">
+							<a href="javascript:;" id="quick_sch" class="showmenu" onmouseover="delayShow(this);">{lang quick}</a>
+							<!--{if CURMODULE == 'forum'}-->
+								<a href="search.php?mod=forum&adv=yes{if $keyword}&srchtxt=$keywordenc{/if}">{lang search_adv}</a>
+							<!--{/if}-->
+						</span>
+                <!--{/if}-->
+                <!--{eval $slist=[]}-->
+                <!--{if $_G['setting']['search']['forum']['status'] && ($_G['group']['allowsearch'] & 2 || $_G['adminid'] == 1)}-->
+                    <!--{block slist[seed]}-->
+                    <a href="source/plugin/ngpt/search.php?{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'seed'} class="a"{/if}>
+                        种子
+                    </a>
+                    <!--{/block}-->
+                <!--{/if}-->
+                <!--{if helper_access::check_module('portal') && $_G['setting']['search']['portal']['status'] && ($_G['group']['allowsearch'] & 1 || $_G['adminid'] == 1)}--><!--{block slist[portal]}--><a href="search.php?mod=portal{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'portal'} class="a"{/if}>{lang portal}</a><!--{/block}--><!--{/if}-->
+                <!--{if $_G['setting']['search']['forum']['status'] && ($_G['group']['allowsearch'] & 2 || $_G['adminid'] == 1)}--><!--{block slist[forum]}--><a href="search.php?mod=forum{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'forum'} class="a"{/if}>{lang thread}</a><!--{/block}--><!--{/if}-->
+                <!--{if helper_access::check_module('blog') && $_G['setting']['search']['blog']['status'] && ($_G['group']['allowsearch'] & 4 || $_G['adminid'] == 1) && helper_access::check_module('blog')}--><!--{block slist[blog]}--><a href="search.php?mod=blog{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'blog'} class="a"{/if}>{lang blog}</a><!--{/block}--><!--{/if}-->
+                <!--{if helper_access::check_module('album') && $_G['setting']['search']['album']['status'] && ($_G['group']['allowsearch'] & 8 || $_G['adminid'] == 1) && helper_access::check_module('album')}--><!--{block slist[album]}--><a href="search.php?mod=album{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'album'} class="a"{/if}>{lang album}</a><!--{/block}--><!--{/if}-->
+                <!--{if helper_access::check_module('group') && $_G['setting']['search']['group']['status'] && ($_G['group']['allowsearch'] & 16 || $_G['adminid'] == 1)}--><!--{block slist[group]}--><a href="search.php?mod=group{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'group'} class="a"{/if}>$_G['setting']['navs'][3]['navname']</a><!--{/block}--><!--{/if}-->
+                <!--{if helper_access::check_module('collection') && $_G['setting']['search']['collection']['status'] && ($_G['group']['allowsearch'] & 64 || $_G['adminid'] == 1)}--><!--{block slist[collection]}--><a href="search.php?mod=collection{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'collection'} class="a"{/if}>{lang collection}</a><!--{/block}--><!--{/if}-->
+                <!--{echo implode("", $slist);}-->
+            </div>
+            <div>
+                <table id="scform_form" cellspacing="0" cellpadding="0" style="float:left;">
+                    <tr>
+                        <td class="td_srchtxt"><input type="text" id="scform_srchtxt" name="srchtxt" size="45" maxlength="40" value="$keyword" tabindex="1" x-webkit-speech speech /><script type="text/javascript">$('scform_srchtxt').focus();</script></td>
+                        <td class="td_srchbtn"><input type="hidden" name="searchsubmit" value="yes" /><button type="submit" id="scform_submit" class="schbtn"><strong>{lang search}</strong></button></td>
+                    </tr>
+                </table>
+                <div id="srhoption">
+                    <div style="clear:left;float:right;">
+                        <label class="lb"><input type="checkbox" class="pr" name="bluefilter" value="onlyblue" <!--{if $onlyblue}-->checked="checked"<!--{/if}-->/>只搜索蓝种</label>
+                        <label class="lb"><input type="checkbox" class="pr" name="deadfilter" value="nodead" <!--{if $nodead||!($_GET['searchsubmit']=='yes')}-->checked="checked"<!--{/if}-->/>忽略死种</label>
+                    </div>
+                    <div id="advsearchb" style="clear:left;">
+                        <a style="cursor: pointer;">
+                            <div class="mbn" onclick="toggle_collapse('advsearch');">
+                                <h2 id="advsearchtitle">高级搜索</h2>
+                            </div>
+                        </a>
+                    </div>
+                    <!--{if $_GET['msg']}-->
+                    <div style="float: left;">
+                        <strong>{$_GET['msg']}</strong>
+                    </div>
+                    <!--{/if}-->
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

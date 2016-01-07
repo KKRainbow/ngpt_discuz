@@ -1,0 +1,261 @@
+<!--获取资源区论坛列表-->
+<!--以下的函数来自与search_seed,不得已重新复制一边-->
+<!--{eval}-->
+require_once libfile('function/forumlist');
+require_once libfile('function/forum');
+function GetResourceForumList()
+{
+global $_G;
+$sql = <<<SQL
+        SELECT fid FROM ngpt_forum_forumfield JOIN ngpt_forum_forum USING (fid)
+        WHERE threadplugin LIKE '%ngpt%';
+SQL;
+$isresource = DB::fetch_all($sql);
+$isres = array();
+foreach ($isresource as $r) {
+$isres[] = $r['fid'];
+}
+loadcache("forums");
+$forumcache = &$_G['cache']['forums'];
+foreach ($forumcache as &$forum) {
+if (!in_array($forum['fid'], $isres) && $forum['type'] == 'sub') {
+$forum = null;
+}
+}
+$storage = $tmp = $forumcache;
+
+$keys = array_keys($tmp);
+foreach($keys as $i => $k)
+{
+if($tmp[$k]['type'] == 'forum'
+&& ($tmp[$keys[$i+1]]['type'] != 'sub'||$i==(count($keys) - 1)))
+{
+$tmp[$k] = null;
+}
+}
+$forumcache = array_diff($tmp,array(null));
+$srchfid = null;
+$forumselect = forumselect(0,0,$srchfid);
+$forumcache = $storage;
+return $forumselect;
+}
+$forumselect = GetResourceForumList();
+loadforum($fid);
+$forumname = $_G['cache']['forums'][$fid]['name'];
+<!--{/eval}-->
+<style type="text/css">
+    .resmoddiv {
+        margin: 0 30px 20px 20px;
+    }
+
+    .framedivheadert {
+        font-weight: bold;
+    }
+
+    .framedivheaderb {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .flbnooverflow {
+        overflow: hidden;
+    }
+
+    .flbnobold {
+        font-weight: normal;
+    }
+
+    .resmodopdiv {
+        margin: 10px 0;
+    }
+    .resmodopdiv h4 {
+        color: darkblue;
+        margin: 4px 0;
+    }
+</style>
+<h3 class="flb">
+    <span style="float: none; font-size: 1em; font-weight: bold;">
+        移动帖子
+    </span>
+    <span>
+        <a href="javascript:;" id="fwin_dialog_close" class="flbc"
+           onclick="hideWindow('resmod');" title="关闭">关闭
+        </a>
+    </span>
+</h3>
+<!-- 主面板 -->
+<form method="post" action="resmod.php?action=execute">
+
+<div class="resmoddiv" style="width: 600px">
+    <div>
+        <div class="framedivheadert flbnooverflow">
+            {$threadsubject}
+        </div>
+        <div class="framedivheaderb flbnooverflow flbnobold">
+            (tid: {$tid}, Info Hash: {$infohash})
+        </div>
+        <table width="100%">
+            <tr>
+                <th>
+                    从
+                    <span>{$forumname}</span>
+                    到
+                    <span id="forumlist">
+                        <select id="targetforumselect">
+                            <option selected="selected">&nbsp;</option>
+                            {$forumselect}
+                        </select>
+                    </span>
+                    <button class="y" onclick="showResInfo('labelinfo')">查看原种子信息</button>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" readonly="readonly" id="subject" name="subject"
+                           style="width: 100%;"/>
+                    <span id="checklen" style="display: none"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="targetforum" style="max-height: 300px;overflow: auto;">
+                        <!--获取目标板块的表单-->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="reason">请说明理由: </label>
+                    <input type="text" id="reason" name="reason" style="width: 80%;"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <input type="submit" value="提交"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+    <input type="hidden" name="fid" value="{$fid}"/>
+    <input type="hidden" name="tid" value="{$tid}"/>
+    <input type="hidden" name="infohash" value="{$infohash}"/>
+    <input type="hidden" name="op" value="movethread"/>
+    <input type="hidden" name="targetfid" id="targetfid_sub"/>
+</form>
+<div id="targetformcontent" style="display: none;"></div>
+<div id="originformcontent" style="display: none;"></div>
+<form style="display: none;" id="resop" method="post" action=
+    <!-- 不知为什么，action 要保留 -->
+    <input type="hidden" name="fid" value="{$fid}"/>
+    <input type="hidden" name="tid" value="{$tid}"/>
+    <input type="hidden" name="infohash" value="{$infohash}"/>
+    <input type="hidden" name="op" id="postresmodop" value=""/>
+    <input type="hidden" name="targetfid" id="targetfid"/>
+    <input type="hidden" name="type" id="type"/>
+</form>
+<script type="text/javascript">
+    appendscript("{$_G['siteroot']}source/plugin/ngpt/static/js/submit-form.js");
+    function showResInfo(op) {
+        $('postresmodop').value = op;
+        setAttr($('resop'), 'action', 'resinfodisplay.php?action=display');
+        showWindow('resinfodisplay_label', 'resop', 'post', true);
+
+        setTimeout(function(){
+            $('fwin_resinfodisplay_label').style.left = '660px';
+        },100);
+        $('fwin_resmod').style.left = '10px';
+    }
+    function fillForm(tid,func,div,type)
+    {
+        $('targetfid').value = tid;
+        $('type').value = type;
+
+        if(type == 'form')
+        {
+            $('resop').action = "resmod.php?action=display";
+            $('postresmodop').value = "getthreadform";
+        }
+        else if(type == 'label')
+        {
+            $('resop').action = "resinfodisplay.php?action=display";
+            $('postresmodop').value = "labelinfo";
+        }
+
+        ajaxpost('resop', div, '', '', '', function() {
+            func();
+        });
+    }
+    function getTargetForm(tid,func) {
+        fillForm(tid,func,'targetformcontent','form');
+    }
+    function getOriginForm(tid,func) {
+        fillForm(tid,func,'originformcontent','label');
+    }
+    //添加发布界面的样式表
+
+    formcache = new Array();
+    originfid = 0;
+    setInterval(function()
+    {
+        if($('targetforumselect').onchange == null)
+        {
+            if($('targetforumselect') == null)return;
+            $('targetforumselect').onchange = function()
+            {
+                var f = $('targetforumselect');
+                var fid = f.value;
+                $('subject').value = '';
+
+                //切换前缓存而不是刚切换完就缓存,给浏览器足够的时间初始化
+                if(originfid != 0)
+                {
+                    formcache[originfid] =
+                            $('targetforum').innerHTML;
+                }
+
+                if(false&&typeof formcache[fid] != 'undefined')
+                {
+                    $('targetforum').innerHTML = formcache[fid];
+                }
+                else
+                {
+                    getTargetForm(fid,function(){
+                        var htmldiv =$('targetformcontent');
+                        var targetdiv = $('targetforum');
+                        targetdiv.innerHTML = '';
+
+                        var tmp = htmldiv.innerHTML;
+                        htmldiv.innerHTML = '';
+
+                        targetdiv.innerHTML =tmp;
+
+                        setTimeout(function(){
+                            //强制刷新typeid
+                            if($('typeid') != null)
+                            {
+                                $('typeid').onchange = function(){
+                                    var t = $('typeid');
+                                    var c = t.change;
+                                    if(c == undefined || strlen(c)<1)
+                                    {
+                                        c = t.getAttribute('change');
+                                    }
+                                    eval(c);
+                                };
+                            }
+                        },1000);
+                    });
+                }
+                originfid = fid;
+                $('targetfid_sub').value = fid;
+                //把窗口放到靠上面一点,防止提交按钮被遮挡
+                $('fwin_resmod').style.top = '10px';
+
+            };
+
+        }
+    },1000);
+
+    loadcss('forum_post');
+</script>

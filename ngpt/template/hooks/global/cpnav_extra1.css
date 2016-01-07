@@ -1,0 +1,20 @@
+a.clickhere {
+    color: red;
+    font-weight: bold;
+}
+
+span.boldtext {
+    font-weight: bold
+}
+
+img.valigncenter {
+    vertical-align: sub; /* 这个对齐刚刚好 */
+}
+
+#toptb a.nofloat {
+    float: none;
+}
+
+#toptb a.nopadding {
+    padding: 0;
+}

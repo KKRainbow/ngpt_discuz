@@ -1,0 +1,17 @@
+<!--{if empty($threadlist)}-->
+<p class="emp xs2 xg2" style="text-align: center;">对不起,没有找到您需要的资源!</p>
+<!--{else}-->
+<div style="clear:both;margin:0 10px 0 20px;">
+    <div id="searchresult">
+        <div class="mbn" style="float:right;margin-right:22px;">
+            <h2>关键字: <strong>{$keyword}</strong>
+                <span style="margin-left:20px;"></span>
+                搜索结果共: <strong>{$index['num']}</strong> 条</h2>
+        </div>
+        <div class="pgs bw0 bm cl">
+            {$multipage}
+        </div>
+        <!--{template forum/forumdisplay_list_seed}-->
+    </div>
+</div>
+<!--{/if}-->

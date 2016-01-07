@@ -1,0 +1,181 @@
+<style type="text/css">
+    .resmoddiv {
+        margin: 0 30px 20px 20px;
+        width: 600px;
+    }
+
+    .framedivheadert {
+        font-weight: bold;
+    }
+
+    .framedivheaderb {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .flbnooverflow {
+        overflow: hidden;
+    }
+
+    .flbnobold {
+        font-weight: normal;
+    }
+
+    .resmodopdiv {
+        margin: 10px 0;
+    }
+
+    .coeffreasonhintdiv {
+        margin: 4px;
+    }
+
+    .resmodopdiv h4 {
+        color: darkblue;
+        margin: 4px 0;
+    }
+
+    .generalcoefftd {
+        width: 33%;
+    }
+
+    .sumitdeletebtn {
+        float: right;
+        margin: 10px 5px;
+        padding-left: 1em;
+        padding-right: 1em;
+        font-weight: bold;
+    }
+</style>
+<script type="text/javascript" reload="1">
+    function displayCoeffDiv(name) {
+        // name: 'up' 'down'
+        if (name == 'up') {
+            $('coeff_up_coeffs').style.display = 'block';
+            $('coeff_down_coeffs').style.display = 'none';
+        } else if (name == 'down') {
+            $('coeff_up_coeffs').style.display = 'none';
+            $('coeff_down_coeffs').style.display = 'block';
+        }
+    }
+</script>
+<h3 class="flb">
+    <span style="float: none; font-size: 1em; font-weight: bold;">
+        设置系数
+    </span>
+    <span>
+        <a href="javascript:;" id="fwin_dialog_close" class="flbc"
+           onclick="hideWindow('mods');" title="关闭">关闭
+        </a>
+    </span>
+</h3>
+<!-- 主面板 -->
+<div class="resmoddiv">
+    <div>
+        <div class="resmodopdiv">
+            <form method="post" action="resmod.php?action=execute">
+                <h4>
+                    上传系数(操作多个帖子时不改变原系数请留空)
+                </h4>
+                <table width="100%">
+                    <tr>
+                <!--{loop range(0,300,20) $counter $val}-->
+                    <!--{if $counter % 6 == 0 && $counter != 0}-->
+                        </tr><tr>
+                    <!--{/if}-->
+                    <td>
+                        <input type="radio" id="upcoe_{$counter}" name="upcoe" value="{$val}"/>
+                        <label for="upcoe_{$counter}">{$val}%</label>
+                    </td>
+                <!--{/loop}-->
+                    </tr>
+                </table>
+                <h4>
+                    下载系数(操作多个帖子时不改变原系数请留空)
+                </h4>
+                <table width="100%">
+                    <tr>
+                        <!--{loop range(0,300,20) $counter $val}-->
+                        <!--{if $counter % 6 == 0 && $counter != 0}-->
+                    </tr><tr>
+                    <!--{/if}-->
+                    <td>
+                        <input type="radio" id="downcoe_{$counter}" name="downcoe" value="{$val}"/>
+                        <label for="downcoe_{$counter}">{$val}%</label>
+                    </td>
+                    <!--{/loop}-->
+                </tr>
+                </table>
+                <h4>
+                    过期时间
+                </h4>
+                <table style="width: 100%;">
+                    <tbody>
+                    <tr>
+                        <td class="generalcoefftd">
+                            <input type="radio" name="duration" id="coeffed_never" value="0" checked="1"/>
+                            <label for="coeffed_never">不过期</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="generalcoefftd">
+                            <input type="radio" name="duration" id="coeffed_1d" value="1"/>
+                            <label for="coeffed_1d">1天后</label>
+                        </td>
+                        <td class="generalcoefftd">
+                            <input type="radio" name="duration" id="coeffed_3d" value="3"/>
+                            <label for="coeffed_3d">3天后</label>
+                        </td>
+                        <td class="generalcoefftd">
+                            <input type="radio" name="duration" id="coeffed_7d" value="7"/>
+                            <label for="coeffed_7d">7天后</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="generalcoefftd">
+                            <input type="radio" name="duration" id="coeffed_30d" value="30"/>
+                            <label for="coeffed_30d">30天后</label>
+                        </td>
+                        <td class="generalcoefftd">
+                            <input type="radio" name="duration" id="coeffed_60d" value="60"/>
+                            <label for="coeffed_60d">60天后</label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4>
+                    是否替换当前系数(不过期或过期时间晚于原时间则必替换)
+                </h4>
+                <div>
+                    <input id="replace_yes" name="replace" type="radio" value="1" checked="checked"/>
+                    <label for="replace_yes">是</label>
+                    <input id="replace_no" name="replace" type="radio" value="0"/>
+                    <label for="replace_no">否</label>
+                </div>
+                <h4>
+                    操作理由
+                </h4>
+                <div class="coeffreasonhintdiv">
+                    <div>
+                       请填写系数设置理由。
+                    </div>
+                </div>
+                <input type="hidden" name="fid" value="{$fid}"/>
+                <input type="hidden" name="tid" value="{$tid}"/>
+                <input type="hidden" name="infohash" value="{$infohash}"/>
+                <input type="hidden" name="op" value="setcoeff"/>
+                <!-- 256 的定义见数据字典，注意预留空间 -->
+                <input type="text" maxlength="150" name="reason" class="pt" style="width: 100%;"
+                       value="在这里输入理由"/>
+                <button type="button" class="pn sumitdeletebtn" onclick="hideWindow('mods');">取消</button>
+                <button type="submit" class="pn pnc sumitdeletebtn">确定</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script reload="1">
+    var upcoe = J$("#upcoefspan").text();
+    var downcoe = J$("#downcoefspan").text();
+    J$("input[name=upcoe][value=" + upcoe + "]").attr('checked','checked');
+    J$("input[name=downcoe][value=" + downcoe + "]").attr('checked','checked');
+</script>

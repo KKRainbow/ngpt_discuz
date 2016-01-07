@@ -1,0 +1,124 @@
+<!--{eval $reloadsig = mt_rand() / floatval(mt_getrandmax())}-->
+<script type="text/javascript">
+    var ngpt_img_root = "{$_G['siteroot']}source/plugin/ngpt/static/image/";
+</script>
+<script type="text/javascript" src="{$_G['siteroot']}source/plugin/ngpt/static/js/peerinfo.js?time={$reloadsig}" reload="1"></script>
+<script>
+    <!--{eval}-->
+    $all = null;
+    $up = null;
+    $down = null;
+    $history = null;
+    GetPeerList($all,$down,$up,$history,$infohash);
+    if (empty($all)) {
+        $floatwindowid = 'resinfodisplay_peer';
+        include template('ngpt:err/err-infloat');
+        goto END_OF_PEERINFO;
+    }
+    <!--{/eval}-->
+    var all = {$all};
+    var down = {$down};
+    var up = {$up};
+    <!--{if $_G['adminid']==1}-->
+    var phistory = {$history};
+    <!--{/if}-->
+</script>
+<h3 class="flb">
+        <span style="float: none; font-size: 1em; font-weight: bold;">
+            上传/下载用户
+        </span>
+        <span>
+            <a href="javascript:;" id="fwin_dialog_close" class="flbc"
+               onclick="hideWindow('resinfodisplay_peer');" title="关闭">关闭
+            </a>
+        </span>
+</h3>
+<!-- 主面板 -->
+<div id="mainboard">
+    <div class="tb cl tb_s">
+        <ul class="peerlistindex">
+            <!--{eval $rloop=['全部用户列表','正在做种用户','正在下载用户']}-->
+            <!--{if $_G['adminid']==1}-->
+            <!--{eval $rloop[] = '种子下载历史';}-->
+            <!--{/if}-->
+            <!-- 开玩笑，种子下载历史怎么能在这里显示呢。A little privacy please. -->
+            <!--{loop $rloop $k $v}-->
+            <li id="plistindex_{$k}"
+                onclick="peerindex_change(this,{$k});">
+                    <a href="javascript:;">{$v}</a>
+            </li>
+            <!--{/loop}-->
+        </ul>
+    </div>
+    <div id="tablecontainer">
+        <table id="peertable" width="1100px" cellspacing="0" class="tb">
+        </table>
+    </div>
+    <div id="statusbar">
+        <span id="pstatus"></span>
+    </div>
+</div>
+<style>
+    #index{
+        margin-bottom: 5px;
+    }
+    #index > li{
+    }
+    #mainboard{
+        margin: 5px 10px 20px 10px;
+        /*height: 500px;*/
+    }
+    #tablecontainer{
+        overflow: auto;
+        clear: both;
+        height:360px;
+        margin-top: -15px; /* -11px 刚刚好，这里过量一点 */
+        border-style: solid;
+        border-width: 1px;
+        border-color: #CDCDCD;
+		width:900px;
+    }
+    #peertable{
+        overflow: auto;
+        border-collapse: separate;
+        margin:10px;
+        padding:0 8px 0 8px;
+        text-align: center;
+        width:1200px;
+    }
+    #peertable .sictrt
+    {
+        margin:0;
+        padding:0;
+        border:0;
+        background-color: white;
+    }
+    #peertable .sictrt a
+    {
+        text-align: center;
+        margin:0;
+        padding:0;
+        border:0;
+        cursor: pointer;
+        background-color: #3ca0ed;
+        color:white;
+        line-height: 2em;
+    }
+    #peertable .sictr
+    {
+        background-color: antiquewhite;
+    }
+    #peertable .sictr td
+    {
+        width: auto;
+        background-color: antiquewhite;
+        text-align: center;
+    }
+    #statusbar{
+        margin-top:8px;
+    }
+</style>
+
+<!--{eval}-->
+END_OF_PEERINFO:
+<!--{/eval}-->

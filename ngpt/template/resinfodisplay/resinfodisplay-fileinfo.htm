@@ -1,0 +1,367 @@
+<!--为了让IE8正常显示,在style元素前必须有其他DOM元素,原因未知-->
+<!-- 原因：在规范中，<style>标签应该是<head>或者<body>的直接子。此处可以使用<link>标签解决。 -->
+<!--{eval}-->
+    global $_G;
+    $flag = false;
+    $tmp = get_file_info($infohash);
+    $range = [0];
+    $picroot = '';
+    $picrootvar = '';
+    if($tmp != null)
+    {
+        $flag = true; //下面开始处理树
+        list($json,$maxdepth) = $tmp;
+        $range = range(1,$maxdepth+1);
+        $picroot = $_G['siteroot'] . 'source/plugin/ngpt/static/image/';
+        $picrootvar = '\'' . $picroot . '\'';
+    } else {
+        $floatwindowid = 'resinfodisplay_file';
+        include template('ngpt:err/err-infloat');
+    goto END_OF_FILEINFO;
+    }
+<!--{/eval}-->
+<div>
+<!-----------------javascript------------------------------------->
+    <script>
+        var picroot = {$picrootvar};
+        function setAttr(obj, attrName, attrValue)
+        {
+            // IE8 及以下不支持 object.setAttribute(name, value) 方法，需要用普通的键值对设置
+            // 不知道这一段<script>开始就用 Object.prototype 的话是否能注入成功，暂且先用保守的伪面向对象调用方法吧。
+            if (!obj) return;
+            if (obj.setAttribute)
+            {
+                obj.setAttribute(attrName.toString(), attrValue);
+            }
+            else
+            {
+                obj[attrName.toString()] = attrValue;
+            }
+        }
+        function getAttr(obj, attrName)
+        {
+            // 同上
+            if (!obj) return;
+            if (obj.getAttribute)
+            {
+                return obj.getAttribute(attrName.toString());
+            }
+            else
+            {
+                return obj[attrName.toString()];
+            }
+        }
+        function eventMouseOver(obj)
+        {
+            obj.style.backgroundColor = '#ffdeff';
+            obj.style.textDecoration = 'underline';
+            // 不是所有浏览器都支持 innerText（如火狐），所以应该使用 innerHTML
+            $('currfile').innerHTML = getAttr(obj,"title");
+        }
+        function eventMouseLeave(obj)
+        {
+            obj.style.backgroundColor = '#ffffff';
+            obj.style.textDecoration = 'none';
+        }
+        function eventClick(obj)
+        {
+            if (obj.parentNode.tagName.toLowerCase() == 'li')
+            {
+                var ul = obj.parentNode.getElementsByTagName('ul')[0];
+                if (ul == undefined) return;
+                if(arguments[1] == true)//强行隐藏
+                {
+                    ul.style.display = 'none';
+                    if(getAttr(obj, "class") != "treeitem t")
+                    {
+                        setAttr(obj, "class", "treeitem dclosed");
+                    }
+                }
+                else if(arguments[1] == false)//强行关闭
+                {
+                    ul.style.display = 'block';
+                    if(getAttr(obj, "class") != "treeitem t")
+                    {
+                        setAttr(obj, "class", "treeitem dopen");
+                    }
+                }
+                else
+                    switch (ul.style.display)
+                    {
+                        case 'block':
+                            ul.style.display = 'none';
+                            if(getAttr(obj, "class") != "treeitem t")
+                            {
+                                setAttr(obj, "class", "treeitem dclosed");
+                            }
+                            break;
+                        case 'none':
+                            ul.style.display = 'block';
+                            if(getAttr(obj, "class") != "treeitem t")
+                            {
+                                setAttr(obj, "class", "treeitem dopen");
+                            }
+                            break;
+                        default :
+                            if(getAttr(obj, "class") != "treeitem t")
+                            {
+                                setAttr(obj, "class", "treeitem dclosed");
+                            }
+                            ul.style.display = 'none';
+                            break;
+                    }
+            }
+        }
+        function createChildTreeNode(json, curLevel)
+        {
+            var thisNode = document.createElement("ul");
+
+            if(json[0] == undefined)
+            {
+                tmp = json;
+                json = Object();
+                json[0] = tmp;
+            }
+
+            for(var i = 0; json[i] != undefined; i++)
+            {
+                var childNode = document.createElement("li");
+                setAttr(childNode, "class", "tree_level_" + curLevel.toString());
+                var childContent = document.createElement("div");
+
+                setAttr(childContent, "onmouseover", "eventMouseOver(this);");
+                setAttr(childContent, "onmouseout", "eventMouseLeave(this);");
+                setAttr(childContent, "onclick", "eventClick(this);");
+                setAttr(childContent,"class","childcontent");
+                setAttr(childContent,"title",json[i].text);
+                var filename = json[i].text;
+                if(json[i].text.length > 40)
+                {
+                    filename = json[i].text.substr(0, 33) + "..." +
+                    json[i].text.substr(json[i].text.length - 7,7);
+                }
+                if(json[i].type == 'f')//是文件
+                {
+                    childContent.innerHTML =
+                            '<span id="filename">'+ filename + '</span>' +
+                            '<span id="size" style="display: block; float:right">'
+                            + json[i].size + '</span>';
+                    setAttr(childContent, "class", "treeitem " + json[i].type);
+                }
+                else if(json[i].type == 'd')
+                {
+                    childContent.innerHTML =
+                            '<span id="filename">'+ filename + '</span>';
+                    setAttr(childContent, "class", "treeitem dopen");
+                }
+                else //title
+                {
+                    childContent.innerHTML =
+                            '<span id="filename">'+ filename + '</span>';
+                    setAttr(childContent, "class", "treeitem t");
+                }
+
+                childNode.appendChild(childContent);
+                if(json[i].children != undefined)
+                {
+                    var node = createChildTreeNode(json[i].children, curLevel + 1);
+                    childNode.appendChild(node);
+                }
+                thisNode.appendChild(childNode);
+            }
+
+            return thisNode;
+        }
+        function buildTree(rootId, json)
+        {
+            //Build Root
+            $(rootId).innerHTML = '';
+            var res = createChildTreeNode(json,0);
+            $(rootId).appendChild(res);
+        }
+        var json = {$json};
+        function delayBuild()
+        {
+            if(!$('tt2')||!$('loading'))
+            {
+                setTimeout(delayBuild,10);
+                return;
+            }
+            $('loading').style.display = 'none';
+            buildTree("tt2",json);
+        }
+        function loadTree()
+        {
+            $('loading').style.display = 'block';
+            if(!$('append_parent').myload_file)
+            {
+                $('loading').style.display = 'none';
+                buildTree("tt2",json);
+                $('append_parent').myload_file = loadTree;
+            }
+            else
+            {
+                delayBuild();
+            }
+            $('status').style.display = 'block';
+        }
+        function hideInfoWindow(key)
+        {
+            $('tt2').innerHTML = "";
+            hideWindow(key,1,0);
+        }
+        function unfoldall(obj)
+        {
+            if(obj.tagName == undefined)return;
+            if(obj.onclick)
+            {
+                eventClick(obj,false);
+            }
+            for(var i =0 ;i<obj.childNodes.length;i++)
+            {
+                unfoldall(obj.childNodes[i],false);
+            }
+        }
+        function foldall(obj)
+        {
+            if(obj.tagName == undefined)return;
+            for(var i =0 ;i<obj.childNodes.length;i++)
+            {
+                foldall(obj.childNodes[i]);
+            }
+            if(obj.onclick)
+            {
+                eventClick(obj,true);
+            }
+        }
+        loadTree();
+    </script>
+<!--------------------------------------------------------------------------->
+
+
+
+<!------------------HTML-------------------------------------------------------->
+
+    <h3 class="flb">
+        <span style="float: none; font-size: 1em; font-weight: bold;">
+            种子包含文件
+        </span>
+        <span>
+            <a href="javascript:;" id="fwin_dialog_close" class="flbc"
+               onclick="hideInfoWindow('resinfodisplay_file');" title="关闭">关闭
+            </a>
+        </span>
+    </h3>
+    <div>
+        <button onclick="foldall($('tt2'))">全部折叠</button>
+        <button onclick="unfoldall($('tt2'))">全部展开</button>
+    </div>
+    <!-- 主面板 -->
+    <div>
+        <div id="tree">
+            <!--正在加载框框-->
+            <div id="loading" onshow="loadTree();">
+                <table cellpadding="0" cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td style="vertical-align: middle; margin-left: 10px; margin-right: 10px;">
+                            <img src="static/image/common/loading.gif"/>
+                        </td>
+                        <td style="vertical-align: middle; margin-left: 10px; margin-right: 10px;">
+                            加载失败,请点击<button onclick="loadTree();">重新加载</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ul id="tt2">
+            </ul>
+        </div>
+        <div id="status" style="display: block;">
+            <div id="currfile_text">当前文件:</div>
+            <div id="currfile" style="overflow: auto; height: 2em;"></div>
+        </div>
+    </div>
+</div>
+
+<!-------------------------------------------------------------------->
+<!--------------------CSS----------------------------------------->
+<style type="text/css">
+    <!--{loop $range $val}-->
+    #tree .tree_level_{$val} {
+        margin: 1px 5px 2px 0px;
+        padding-left: 10px;
+    }
+    <!--{/loop}-->
+    #tree
+    {
+        width: 500px;
+        overflow-y: auto;
+        max-height: 300px;
+        min-height: 250px;
+        cursor: default;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    #tree .treeitem
+    {
+        padding-left: 20px;
+    }
+    #tree .f
+    {
+        background: url("{$picroot}file.png") no-repeat;
+        color:#105586;
+    }
+    #tree .dclosed
+    {
+        background: url("{$picroot}closed.png") no-repeat;
+        color:#B50000;
+        cursor: pointer;
+    }
+    #tree .dopen
+    {
+        background: url("{$picroot}open.png") no-repeat;
+        color:#B50000;
+        cursor: pointer;
+    }
+    #tree .t
+    {
+        background: url("{$picroot}root.png") no-repeat;
+        color: #0000ff;
+        cursor: pointer;
+    }
+    #symbol
+    {
+        border: 1px #000000 dotted;
+        margin: 0px;
+    }
+    #exit
+    {
+        margin:0 auto;
+    }
+    .bottom
+    {
+        margin: 1px 3px 1px 8px;
+    }
+    #status
+    {
+        margin: 20px 10px 10px;
+    }
+
+    #currfile_text
+    {
+        font-weight: bold;
+    }
+
+    #currfile
+    {
+        margin: 10px;
+    }
+</style>
+
+
+<!------------------------------------------------------------------>
+
+<!--{eval}-->
+END_OF_FILEINFO:
+<!--{/eval}-->

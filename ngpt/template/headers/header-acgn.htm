@@ -1,0 +1,99 @@
+<div id="rules" style="font-weight: normal; font-size: 12px; line-height: 24px;"><!-- 版头开始 -->
+
+    <script language="JavaScript">
+        var __lansure_aimgs = [
+            {
+                "img": "http://buaabt.cn/upload/2012/12/29/10/3687657805162.png",
+                "text": "＼アッカリーン／",
+                "polygon": "75,199, 81,182, 72,149, 72,130, 77,119, 66,111, 63,119, 56,119, 46,109, 63,41, 68,31, 85,16, 101,10, 126,10, 148,21, 160,36, 169,55, 173,105, 168,111, 162,110, 156,114, 164,128, 164,147, 154,189, 154,199"
+            },
+            {
+                "img": "http://buaabt.cn/upload/2012/12/29/10/3687740608363.png",
+                "text": "＼アッカリーン／",
+                "polygon": "71,199, 75,189, 75,174, 71,171, 71,164, 78,148, 79,136, 82,127, 102,112, 79,112, 71,107, 68,78, 54,69, 64,57, 60,47, 70,37, 77,37, 86,27, 99,23, 99,16, 104,10, 109,10, 109,14, 105,22, 121,22, 132,28, 139,26, 149,33, 151,43, 161,52, 152,64, 160,87, 159,97, 147,112, 144,102, 140,108, 129,110, 148,120, 166,150, 167,160, 176,171, 176,184, 168,196, 152,189, 155,199"
+            },
+            {
+                "img": "http://buaabt.cn/upload/2012/12/29/10/3687760908988.png",
+                "text": "＼アッカリーン／",
+                "polygon": "45,199, 37,185, 46,171, 35,155, 20,144, 22,140, 35,145, 24,132, 27,127, 40,139, 31,123, 35,120, 47,136, 46,119, 50,118, 58,143, 64,134, 69,136, 63,168, 67,172, 69,185, 75,179, 78,170, 82,170, 83,155, 89,146, 118,130, 118,126, 112,124, 112,130, 105,125, 104,131, 98,122, 98,131, 94,130, 84,119, 82,134, 74,119, 70,125, 68,87, 61,86, 49,74, 62,61, 59,56, 59,48, 66,41, 73,41, 77,44, 85,33, 96,26, 109,25, 109,17, 115,11, 113,19, 113,24, 118,23, 128,19, 139,21, 153,31, 163,29, 173,37, 173,44, 172,47, 185,58, 183,64, 172,72, 173,84, 173,104, 169,121, 168,111, 157,132, 157,118, 147,128, 147,120, 141,128, 172,144, 181,155, 187,182, 193,186, 194,199"
+            },
+            {
+                "img": "http://buaabt.cn/upload/2012/12/29/10/3687856201905.png",
+                "text": "＼バッカリーン／",
+                "polygon": "0,199, 0,194, 31,183, 35,169, 31,167, 3,126, 28,121, 26,107, 31,97, 18,68, 18,61, 26,61, 34,67, 42,94, 47,93, 48,86, 56,79, 59,82, 60,99, 66,115, 66,130, 78,150, 86,143, 107,138, 96,131, 94,146, 87,132, 87,156, 77,137, 71,115, 68,133, 64,118, 65,93, 63,78, 61,77, 58,86, 56,74, 42,67, 49,56, 50,51, 70,28, 84,11, 80,0, 266,0, 259,16, 249,30, 251,46, 248,63, 241,61, 255,80, 262,104, 228,113, 219,132, 207,148, 200,154, 204,138, 200,144, 209,149, 232,123, 266,125, 267,164, 256,175, 239,173, 254,196, 254,199"
+            }
+        ];
+        /*
+         jQuery.ajax(
+         {
+         type: "get",
+         url: "/attachment.aspx?attachmentid=595819",
+         async: false,
+         success: function(data){
+         var tmp = jQuery.parseJSON(data);
+         if (tmp != null) __lansure_aimgs = tmp
+         }
+         }
+         );
+         */
+        var __lansure_aimgindex;
+        var __lansure_aimgurl;
+        function __lansure_Change(id, p) {
+            ele = document.getElementById(id);
+            if (p == 0) {
+                ele.style.background = 'url(' + encodeURI(__lansure_aimgurl) + ') no-repeat 0px -200px';
+            } else {
+                ele.style.background = 'url(' + encodeURI(__lansure_aimgurl) + ') no-repeat 0px 0px';
+            }
+        }
+    </script>
+
+    <table>
+        <tbody>
+        <tr>
+            <td width="600">
+                <script language="JavaScript">
+                    __lansure_aimgindex = Math.floor(Math.random() * (__lansure_aimgs.length));
+                    __lansure_aimgurl = __lansure_aimgs[__lansure_aimgindex].img;
+                    document.write("<style type=\"text/css\">");
+                    document.write("#__lansure_banner { BACKGROUND: url(" + encodeURI(__lansure_aimgurl) + ") no-repeat 0px 0px; WIDTH: 600px; HEIGHT: 200px; }");
+                    document.write("</style>");
+                    document.write("<map name=\"__lansure_bannermap\" id=\"__lansure_bannermap\" >");
+                    document.write("<area shape=\"poly\" coords=\"" + escape(__lansure_aimgs[__lansure_aimgindex].polygon).replace(/%2C/g, ",").replace(/%20/g, " ") + "\" alt=\"" + escape(__lansure_aimgs[__lansure_aimgindex].text).replace(/(%u[0-9a-zA-Z]{4}|%20)/g, function ($0, $1) {
+                        return unescape($1);
+                    }) + "\" title=\"" + escape(__lansure_aimgs[__lansure_aimgindex].text).replace(/(%u[0-9a-zA-Z]{4}|%20)/g, function ($0, $1) {
+                        return unescape($1);
+                    }) + "\" style=\"CURSOR: default;\" onmouseover=\"__lansure_Change('__lansure_banner', 0);\" onmouseout=\"__lansure_Change('__lansure_banner', 1);\" />");
+                    document.write("</map>");
+                </script>
+                <img id="__lansure_banner" usemap="#__lansure_bannermap" src="http://buaabt.cn/upload/2012/12/29/10/3687882808888.png"
+                     style="border: 0px;"
+                     alt="未来花园动漫版" title="未来花园动漫版">
+            </td>
+            <td>
+                <p>简略版规: </p>
+                <p>1.求物请在置顶帖里求,单独开贴砍之</p>
+                <p>2.发种请参阅发种规则,不符合规则砍之</p>
+                <p>3.具有深刻内涵或创意非凡的帖子,撒糖之</p>
+                <p>Ver.0.0.1.beta</p>
+                <p><font color="red">【动漫区交流QQ群】</font></p>
+                <p>群名：没有主题的闲聊群(已满) 群号：20151972 </p>
+                <p>新群：愉快的食物们 群号：165568955 </p>
+                <p>(版头版权: lansure@FGBT)</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 版头结束
+    已确认兼容：
+    Chrome 23.0.1271.97
+    Maxthon 4.0.0.2000 极速/兼容
+    IE 9.0.8112.16421 / 9.0.12 (KB2761465)
+    FireFox 17.0.1
+    金山猎豹 2.1.11.3334 极速/兼容
+    QQ浏览器 7.0.4350.400
+    Opera x64 12.12.1707
+    Safari 5.1.7 (7534.57.2)
+    -->
+</div>

@@ -1,0 +1,210 @@
+<!--{eval}-->
+$email_verification_status = check_email_verification_status();
+<!--{/eval}-->
+<link rel="stylesheet" type="text/css" href="source/plugin/ngpt/template/userstat.css"/>
+<div>
+    <table>
+        <tr>
+            <td class="uibasetd">
+                <div class="leftsidediv">
+                    <img src="<!--{avatar($uid, large, true)}-->"/>
+                    <div class="unameanduid">
+                        <span style="font-weight: bold;">$_G['username']<br/></span>
+                        UID: {$uid}
+                    </div>
+                    <!--{if $email_verification_status > 0}-->
+                        <!--{if $candownloadstatus == 'notenabled'}-->
+                        <div class="tbmu mbm">
+                            PT功能: <span class="ptbaseinfo ptbine">未启用</span>
+                        </div>
+                        <form method="post" action="{$ptman_page_url}?action=enablept">
+                            <a href="javascript:;">
+                                <button class="pn pnc enableptbtn" type="submit" name="enablept" value="1">
+                                    启用PT功能
+                                </button>
+                            </a>
+                        </form>
+                        <!--{elseif $candownloadstatus == 'normal'}-->
+                        <div>
+                            PT功能: <span class="ptbaseinfo ptbinm">正常</span>
+                        </div>
+                        <!--{elseif $candownloadstatus == 'banned'}-->
+                        <div>
+                            PT功能: <span class="ptbaseinfo ptbibn">禁止下载</span>
+                        </div>
+                        <!--{/if}-->
+                    <!--{else}-->
+                    <div class="tbmu mbm">
+                        <!--{if $candownloadstatus == 'notenabled'}-->
+                        PT功能: <span class="ptbaseinfo ptbine">未启用</span>
+                        <!--{elseif $candownloadstatus == 'normal'}-->
+                        PT功能: <span class="ptbaseinfo ptbinm">正常</span>
+                        <!--{elseif $candownloadstatus == 'banned'}-->
+                        PT功能: <span class="ptbaseinfo ptbibn">禁止下载</span>
+                        <!--{/if}-->
+                        <div>
+                            <a href="{$_G['siteroot']}home.php?mod=spacecp&ac=profile&op=password" target="_blank">
+                                <button class="pn pnc enableptbtn" type="button" name="enablept" value="1">
+                                    验证邮箱
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <!--{/if}-->
+                </div>
+            </td>
+            <!--{if $email_verification_status > 0}-->
+            <td>
+                <!--{if $candownloadstatus != 'notenabled'}-->
+                <div class="rightsidediv">
+                    <div id="updowndiv" class="tbmu mbm">
+                        <h2 class="xs3 h2ox">我的上传下载</h2>
+
+                        <p>
+                            请将共享率控制在 <strong>1</strong> 以上，过低的共享率可能会影响到您的正常下载。<br/>
+                            共享率计算公式为：
+                            <span class="shareratiocount">共享率</span> = <span class="uploadcount">统计上传</span> / <span
+                                class="downloadcount">统计下载</span>
+                        </p>
+
+                        <div class="updowninfocontainer">
+                            <table id="updowntable" class="updowninfotable">
+                                <tr class="updownrow">
+                                    <td class="updownpic"></td>
+                                    <td class="updowninfoheader shareratiocount">共享率:</td>
+                                    <td class="updowninfo">
+                            <span style="color: {$s_share_ratio_color_str};">
+                                {$s_share_ratio_str}
+                            </span>
+                                    </td>
+                                </tr>
+                                <tr class="updownrow">
+                                    <td class="updownpic"><img src="static/image/ngpt/upload_64sq.png" width="18"
+                                                               height="20"/></td>
+                                    <td class="updowninfoheader uploadcount">统计上传:</td>
+                                    <td class="updowninfo" id="s_up">
+                                        {$s_up_str}
+                                    </td>
+                                    <td class="updownpic"><img src="static/image/ngpt/upload_64sq.png" width="18"
+                                                               height="20"/></td>
+                                    <td class="updowninfoheader normalupdowncount">真实上传:</td>
+                                    <td class="updowninfo" id="r_up">
+                                        {$r_up_str}
+                                    </td>
+                                </tr>
+                                <tr class="updownrow">
+                                    <td class="updownpic"><img src="static/image/ngpt/download_64sq.png" width="18"
+                                                               height="20"/></td>
+                                    <td class="updowninfoheader downloadcount">统计下载:</td>
+                                    <td class="updowninfo" id="s_down">
+                                        {$s_down_str}
+                                    </td>
+                                    <td class="updownpic"><img src="static/image/ngpt/download_64sq.png" width="18"
+                                                               height="20"/></td>
+                                    <td class="updowninfoheader normalupdowncount">真实下载:</td>
+                                    <td class="updowninfo" id="r_down">
+                                        {$r_down_str}
+                                    </td>
+                                </tr>
+                                <tr class="updownrow">
+                                    <td class="updownpic"></td>
+                                    <td class="updowninfoheader normalupdowncount">上传种子:</td>
+                                    <td class="updowninfo" id="in_up">
+                                        {$numuploadingseeds}
+                                    </td>
+                                    <td class="updownpic"></td>
+                                    <td class="updowninfoheader normalupdowncount">下载种子:</td>
+                                    <td class="updowninfo" id="in_down">
+                                        {$numdownloadingseeds}
+                                    </td>
+                                    <td class="updownpic"></td>
+                                    <td class="updowninfoheader normalupdowncount">完成种子:</td>
+                                    <td class="updowninfo" id="ed_down">
+                                        {$numdownloadedseeds}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="updownpic"></td>
+                                    <td class="updowninfoheader normalupdowncount">上传peers:</td>
+                                    <td class="updowninfo" id="in_up_p">
+                                        {$numuploadingpeers}
+                                    </td>
+                                    <td class="updownpic"></td>
+                                    <td class="updowninfoheader normalupdowncount">下载peers:</td>
+                                    <td class="updowninfo" id="in_down_p">
+                                        {$numdownloadingpeers}
+                                    </td>
+                                    <td class="updownpic"></td>
+                                    <td class="updowninfoheader normalupdowncount">发布种子:</td>
+                                    <td class="updowninfo" id="pub_ed">
+                                        {$numpublishedseeds}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="trackerdiv" class="tbmu mbm">
+                        <h2 class="xs3 h2ox">我的 Tracker</h2>
+
+                        <div>
+                            Tracker 是BT客户端与服务器通信从而获得资源位置信息的一个媒介。在PT站中，tracker 一般由公共声明地址和用户标识符组成。<br/>
+                            本站所用的用户标识符是用户识别码（passkey）。
+                        </div>
+                        <div class="passkeyregion">
+                            <div>
+                                您的用户识别码:
+                            </div>
+                            <div class="passkeytext">
+                                {$passkey}
+                            </div>
+                        </div>
+                        <div class="passkeyregion">
+                            <div>
+                                您的 tracker 地址:
+                            </div>
+                            <div class="passkeytext">
+                                {$fulltracker}
+                            </div>
+                        </div>
+                        <p>
+                            注意：<br/>
+                            1. 在上传与下载的过程当中，用户识别码是认证您身份的唯一凭证，请勿将自己的 tracker 或用户识别码泄露给他人；<br/>
+                            2. 您下载的种子中也包含您的 tracker 信息，同时包含您的用户识别码，所以也不要将自己的种子转发给别人；<br/>
+                            3. 如果您怀疑自己的用户识别码已经泄露，请及时点击下方 <span class="fakebuttonspan">重置用户识别码</span> 按钮重置用户识别码。<br/>
+                            4. 重置用户识别码后，之前下载的种子将无法在本服务器通过验证，需要手工更改BT客户端中的任务 tracker 为上方所显示的新值。
+                        </p>
+
+                        <form method="post" action="{$ptman_page_url}?action=resetpasskey">
+                            <a href="javascript:;">
+                                <button class="pn pnc resetpasskeybtn" type="submit" name="resetpasskey" value="1">
+                                    重置用户识别码
+                                </button>
+                            </a>
+                        </form>
+                    </div>
+
+                    <div id="udresetdiv">
+                        <h2 class="xs3 h2ox">重置上传下载状态</h2>
+
+                        <div>
+                            当您的上传下载状态出现异常（如，突然断电后遗留 peer 节点）时，可以尝试采用重置上传下载状态的方法解决。
+                        </div>
+                        <form method="post" action="{$ptman_page_url}?action=resetudstatus">
+                            <a href="javascript:;">
+                                <button class="pn pnc resetpasskeybtn" type="submit" name="resetudstatus" value="1">
+                                    重置上传下载状态
+                                </button>
+                            </a>
+                        </form>
+                        <div style="color: red; font-weight: bold;">
+                            警告：频繁使用此功能可能会导致统计数据出现异常，如上传下载统计不完全，甚至可能被判定为作弊。请谨慎使用。
+                        </div>
+                    </div>
+                </div>
+                <!--{/if}-->
+            </td>
+            <!--{/if}-->
+        </tr>
+    </table>
+</div>

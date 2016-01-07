@@ -1,0 +1,79 @@
+<script>
+    function tmodthreads(optgroup, operation) {
+        var checked = 0;
+        var operation = !operation ? '' : operation;
+        if (optgroup == 99) {
+            $('moderate').action=
+                    'source/plugin/ngpt/admin.php?fid=$_G[fid]&infloat=yes&nopost=yes';
+        } else {
+            $('moderate').action=
+                    'forum.php?mod=topicadmin&action=moderate&fid=$_G[fid]&infloat=yes&inajax=1&nopost=yes';
+        }
+        for(var i = 0; i < $('moderate').elements.length; i++) {
+            if($('moderate').elements[i].name.match('moderate') && $('moderate').elements[i].checked) {
+                checked = 1;
+                break;
+            }
+        }
+        if(!checked) {
+            alert('请选择需要操作的帖子');
+        } else {
+            $('moderate').optgroup.value = optgroup;
+            $('moderate').operation.value = operation;
+            hideWindow('mods');
+            showWindow('mods', 'moderate', 'post', 0);
+        }
+    }
+</script>
+<div id="mdly" style="display: none;{if $_G['forum']['picstyle']} margin-top: 20px;{/if}">
+    <input type="hidden" name="optgroup" />
+    <input type="hidden" name="operation" />
+    <a class="cp" href="javascript:;" title="最小化" onclick="$('mdly').className='cpd'">最小化</a>
+    <label><input type="checkbox" name="chkall" class="pc" onclick="if(!($('mdct').innerHTML = modclickcount = checkall(this.form, 'moderate'))) {$('mdly').style.display = 'none';}" />选择全部</label>
+    <h6><span>选择</span><strong onclick="$('mdly').className='';" onmouseover="this.title='最大化'" id="mdct"></strong><span>篇: </span></h6>
+    <p>
+        <!--{if $_G['group']['allowdelpost']}-->
+        <strong><a href="javascript:;" onclick="tmodthreads(99, 'delete');return false;">删除</a></strong>
+        <span class="pipe">|</span>
+        <!--{/if}-->
+        <!--{if $_G['group']['allowmovethread'] && $_G['forum']['status'] != 3}-->
+        <strong><a href="javascript:;" onclick="tmodthreads(99, 'setcoef');return false;">修改系数</a></strong>
+        <span class="pipe">|</span>
+        <!--{/if}-->
+        <!--{if $_G['group']['allowedittypethread']}-->
+        <strong><a href="javascript:;" onclick="tmodthreads(2, 'type');return false;">分类</a></strong>
+        <!--{/if}-->
+        <!--{if $_G['forum']['status'] == 3 && in_array($_G['adminid'], array('1','2'))}-->
+        <span class="pipe">|</span>
+        <strong><a href="javascript:;" onclick="tmodthreads(5, 'recommend_group');return false;">{lang topicadmin_recommend_forum}</a></strong>
+        <!--{/if}-->
+        <!--{if CURMODULE == 'forumdisplay'}-->
+        <!--{hook/forumdisplay_modlayer}-->
+        <!--{elseif CURMODULE == 'modcp'}-->
+        <!--{hook/modcp_modlayer}-->
+        <!--{/if}-->
+    </p>
+    <p>
+        <!--{if $_G['group']['allowstickthread']}-->
+        <a href="javascript:;" onclick="tmodthreads(1, 'stick');return false;">置顶</a>
+        <!--{/if}-->
+        <!--{if $_G['group']['allowdigestthread']}-->
+        <a href="javascript:;" onclick="tmodthreads(1, 'digest');return false;">精华</a>
+        <!--{/if}-->
+        <!--{if $_G['group']['allowhighlightthread']}-->
+        <a href="javascript:;" onclick="tmodthreads(1, 'highlight');return false;">高亮</a>
+        <!--{/if}-->
+        <!--{if $_G['group']['allowrecommendthread'] && $_G['forum']['modrecommend']['open'] && $_G['forum']['modrecommend']['sort'] != 1}-->
+        <a href="javascript:;" onclick="tmodthreads(1, 'recommend');return false;">推荐</a>
+        <!--{/if}-->
+        <!--{if $_G['group']['allowbumpthread'] || $_G['group']['allowclosethread']}-->
+        <span class="pipe">|</span>
+        <!--{/if}-->
+        <!--{if $_G['group']['allowbumpthread']}-->
+        <a href="javascript:;" onclick="tmodthreads(3, 'bump');return false;">提示下沉</a>
+        <!--{/if}-->
+        <!--{if $_G['forum']['status'] != 3 && $_G['group']['allowclosethread']}-->
+        <a href="javascript:;" onclick="tmodthreads(4);return false;">关闭打开</a>
+        <!--{/if}-->
+    </p>
+</div>

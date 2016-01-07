@@ -1,0 +1,23 @@
+span.ipspan {
+    font-weight: bold;
+}
+
+span.ipspan.ipv4 {
+    color: #ff0000;
+}
+
+span.ipspan.ipv6 {
+    color: #0000ff;
+}
+
+span.ipspan.teredo {
+    color: #800080;
+}
+
+span.ipspan.isatap {
+    color: #000000;
+}
+
+span.ipspan.wormhole {
+    color: #158B00;
+}

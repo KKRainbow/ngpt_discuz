@@ -1,0 +1,51 @@
+div.aa_container {
+    /* IE ≤ IE8 不支持 last-child 伪选择器，因此统一用负 margin 解决 */
+    margin-bottom: -5px;
+}
+
+a.aptr {
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+a.aa_normal {
+    border-width: 1px;
+    border-color: #92A5C3;
+    border-style: solid;
+    background-color: #E5EDF2;
+    padding: 0 5px;
+    margin: 0 5px 5px 0;
+    color: #92A5C3;
+}
+
+a.aa_hover {
+    border-width: 1px;
+    border-color: #92A5C3;
+    border-style: solid;
+    background-color: #F5FDFF;
+    padding: 0 5px;
+    margin: 0 5px 5px 0;
+    color: #92A5C3;
+}
+
+a.aa_visited {
+    border-width: 1px;
+    color: white;
+    border-color: #3879D9;
+    border-style: solid;
+    background-color: #3879D9;
+    padding: 0 5px;
+    margin: 0 5px 5px 0;
+}
+
+a.aa_visited_hover {
+    border-width: 1px;
+    color: white;
+    border-color: #3879D9;
+    border-style: solid;
+    background-color: #389CD0;
+    padding: 0 5px;
+    margin: 0 5px 5px 0;
+}

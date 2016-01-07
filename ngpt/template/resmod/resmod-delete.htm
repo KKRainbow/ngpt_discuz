@@ -1,0 +1,135 @@
+<style type="text/css">
+    .resmoddiv {
+        margin: 0 30px 20px 20px;
+        width: 600px;
+    }
+
+    .framedivheadert {
+        font-weight: bold;
+    }
+
+    .framedivheaderb {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .flbnooverflow {
+        overflow: hidden;
+    }
+
+    .flbnobold {
+        font-weight: normal;
+    }
+
+    .resmodopdiv {
+        margin: 10px 0;
+    }
+
+    .coeffreasonhintdiv {
+        margin: 4px;
+    }
+
+    .resmodopdiv h4 {
+        color: darkblue;
+        margin: 4px 0;
+    }
+
+    .generalcoefftd {
+        width: 33%;
+    }
+
+    .sumitdeletebtn {
+        float: right;
+        margin: 10px 5px;
+        padding-left: 1em;
+        padding-right: 1em;
+        font-weight: bold;
+    }
+</style>
+<h3 class="flb">
+    <span style="float: none; font-size: 1em; font-weight: bold;">
+        删除种子
+    </span>
+    <span>
+        <a href="javascript:;" id="fwin_dialog_close" class="flbc"
+           onclick="hideWindow('mods');" title="关闭">关闭
+        </a>
+    </span>
+</h3>
+<!-- 主面板 -->
+<div class="resmoddiv">
+    <div>
+        <div class="resmodopdiv">
+            <h4>
+                处罚
+            </h4>
+            <table style="width: 100%;">
+                <tbody>
+                <tr>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_no" value="0" checked="1"/>
+                        <label for="pen_no">不进行处罚</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_2g" value="2"/>
+                        <label for="pen_2g">扣罚上传量 2 GB</label>
+                    </td>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_5g" value="5"/>
+                        <label for="pen_5g">扣罚上传量 5 GB</label>
+                    </td>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_10g" value="10"/>
+                        <label for="pen_10g">扣罚上传量 10 GB</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_20g" value="20"/>
+                        <label for="pen_20g">扣罚上传量 20 GB</label>
+                    </td>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_50g" value="50"/>
+                        <label for="pen_50g">扣罚上传量 50 GB</label>
+                    </td>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_100g" value="100"/>
+                        <label for="pen_100g">扣罚上传量 100 GB</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_200g" value="200"/>
+                        <label for="pen_200g">扣罚上传量 200 GB</label>
+                    </td>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_500g" value="500"/>
+                        <label for="pen_500g">扣罚上传量 500 GB</label>
+                    </td>
+                    <td class="generalcoefftd">
+                        <input type="radio" name="penalty" id="pen_1000g" value="1000"/>
+                        <label for="pen_1000g">扣罚上传量 1000 GB</label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <h4>
+                操作理由
+            </h4>
+            <div class="coeffreasonhintdiv">
+                <div>
+                    请务必包含具体操作理由，而不仅仅是“违规”、“请仔细查看版规”，因为
+                    <span style="font-weight: bold; color: red;">这些理由会通过站内消息发送给所有曾经下载和正在上传下载的人，而不仅仅是发布者</span>。
+                    <span style="color: #0000ff;">请确保所引用的版规是无差错、无歧义、确实存在的。</span>
+                </div>
+            </div>
+            <!-- 256 的定义见数据字典，注意预留空间 -->
+            <input type="text" maxlength="150" name="reason" class="pt" style="width: 100%;"
+                   value="在这里输入理由"/>
+            <button type="button" class="pn sumitdeletebtn" onclick="hideWindow('mods');">取消</button>
+            <button type="submit" class="pn pnc sumitdeletebtn">确定</button>
+        </div>
+    </div>
+</div>

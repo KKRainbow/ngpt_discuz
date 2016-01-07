@@ -1,0 +1,98 @@
+<!--为了让IE8正常显示,在style元素前必须有其他DOM元素,原因未知-->
+<!-- 原因：在规范中，<style>标签应该是<head>或者<body>的直接子。此处可以使用<link>标签解决。 -->
+<div>
+    <h3 class="flb">
+        <span style="float: none; font-size: 1em; font-weight: bold;">
+            标签信息
+        </span>
+        <span>
+            <a href="javascript:;" id="fwin_dialog_close" class="flbc"
+               onclick="hideWindow('resinfodisplay_label',1,0);" title="关闭">关闭
+            </a>
+        </span>
+    </h3>
+    <!-- 主面板 -->
+    <div class="resinfodisplaydiv">
+        <div class="rilabeldiv">
+            <div class="extratitlediv">
+                <!--{if !empty($labels['infohash'])}-->
+                <div class="flbnooverflow flbbold">
+                    Info Hash: {$labels['infohash']}
+                </div>
+                <!--{/if}-->
+                <!--{if !empty($labels['threadtype'])}-->
+                <div class="flbnooverflow flbbold">
+                    分类: {$labels['threadtype']}
+                </div>
+                <!--{/if}-->
+            </div>
+            <table class="riinfot" cellspacing="0" cellpadding="0">
+                <tbody class="riinfotbody">
+                <!--{loop $labels['fields'] $item}-->
+                <tr class="riinfotr">
+                    <th class="riinfoth">{$item['desc']}</th>
+                    <td class="riinfotd">{$item['value']}</td>
+                </tr>
+                <!--{/loop}-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    div.rilabeldiv {
+        padding: 0 15px 15px;
+        width: 500px;
+    }
+
+    table.riinfot {
+        width: 100%;
+        table-layout: fixed;
+        word-break: normal;
+        border-collapse: collapse;
+    }
+
+    tbody.riinfotbody {
+        border-left-style: solid;
+        border-right-style: solid;
+        border-color: darkgray;
+        border-width: 1px;
+    }
+
+    tr.riinfotr {
+        border-top-style: solid;
+        border-bottom-style: solid;
+        border-color: darkgray;
+        border-width: 1px;
+    }
+
+    th.riinfoth {
+        width: 15%;
+        font-weight: bold;
+        color: #000090;
+        background-color: #A0B3ff; /* royalblue 4169e1 */
+        padding: 3px 5px;
+    }
+
+    td.riinfotd {
+        width: 75%;
+        vertical-align: text-top;
+        max-width: 75%;
+        min-width: 75%;
+        color: #000060;
+        background-color: lightsteelblue;
+        padding: 3px 5px;
+    }
+
+    div.flbnooverflow {
+        overflow: hidden;
+    }
+
+    div.flbbold {
+        font-weight: bold;
+    }
+
+    div.extratitlediv {
+        margin-bottom: 10px;
+    }
+</style>
