@@ -2,27 +2,15 @@
 <script type="text/javascript">
     var ngpt_img_root = "{$_G['siteroot']}source/plugin/ngpt/static/image/";
 </script>
-<script type="text/javascript" src="{$_G['siteroot']}source/plugin/ngpt/static/js/peerinfo.js?time={$reloadsig}" reload="1"></script>
 <script>
-    <!--{eval}-->
-    $all = null;
-    $up = null;
-    $down = null;
-    $history = null;
-    GetPeerList($all,$down,$up,$history,$infohash);
-    if (empty($all)) {
-        $floatwindowid = 'resinfodisplay_peer';
-        include template('ngpt:err/err-infloat');
-        goto END_OF_PEERINFO;
-    }
-    <!--{/eval}-->
     var all = {$all};
-    var down = {$down};
-    var up = {$up};
-    <!--{if $_G['adminid']==1}-->
+    var down = {$leechers};
+    var up = {$seeders};
+    <!--{if $_G['adminid']==1 && !empty($history)}-->
     var phistory = {$history};
     <!--{/if}-->
 </script>
+<script type="text/javascript" src="{$_G['siteroot']}source/plugin/ngpt/static/js/peerinfo.js?time={$reloadsig}" reload="1"></script>
 <h3 class="flb">
         <span style="float: none; font-size: 1em; font-weight: bold;">
             上传/下载用户
@@ -111,14 +99,10 @@
     #peertable .sictr td
     {
         width: auto;
-        background-color: antiquewhite;
+        background-color: whitesmoke;
         text-align: center;
     }
     #statusbar{
         margin-top:8px;
     }
 </style>
-
-<!--{eval}-->
-END_OF_PEERINFO:
-<!--{/eval}-->

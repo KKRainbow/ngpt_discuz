@@ -1,25 +1,5 @@
 <!--为了让IE8正常显示,在style元素前必须有其他DOM元素,原因未知-->
 <!-- 原因：在规范中，<style>标签应该是<head>或者<body>的直接子。此处可以使用<link>标签解决。 -->
-<!--{eval}-->
-    global $_G;
-    $flag = false;
-    $tmp = get_file_info($infohash);
-    $range = [0];
-    $picroot = '';
-    $picrootvar = '';
-    if($tmp != null)
-    {
-        $flag = true; //下面开始处理树
-        list($json,$maxdepth) = $tmp;
-        $range = range(1,$maxdepth+1);
-        $picroot = $_G['siteroot'] . 'source/plugin/ngpt/static/image/';
-        $picrootvar = '\'' . $picroot . '\'';
-    } else {
-        $floatwindowid = 'resinfodisplay_file';
-        include template('ngpt:err/err-infloat');
-    goto END_OF_FILEINFO;
-    }
-<!--{/eval}-->
 <div>
 <!-----------------javascript------------------------------------->
     <script>
@@ -358,10 +338,3 @@
         margin: 10px;
     }
 </style>
-
-
-<!------------------------------------------------------------------>
-
-<!--{eval}-->
-END_OF_FILEINFO:
-<!--{/eval}-->

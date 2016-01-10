@@ -319,6 +319,8 @@ SQL;
          * @var string $v
          * @var string $u
          */
+        $sign = $size;
+        $size = abs($size);
         // 注意，大于 2 GB 级别的都只能由 64 位机器处理
         if ($size < 1024) {
             $v = strval($size);
@@ -342,6 +344,9 @@ SQL;
         } else {
             $v = sprintf('%.02lf', $size / 1125899906842624, 2);
             $u = ' PB';
+        }
+        if ($sign < 0) {
+            $v = '-' . $v;
         }
         return $v . $u;
     }

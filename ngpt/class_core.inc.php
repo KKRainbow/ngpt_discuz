@@ -10,4 +10,8 @@ C::app()->init();
 
 //showmessage函数用到这个
 $_G['siteurl'] = str_replace('source/plugin/ngpt/', '', $_G['siteurl']);
+$_G['siteroot'] = str_replace('source/plugin/ngpt/', '', $_G['siteroot']);
 
+if ($_G['uid'] <= 0) {
+    showmessage('请先登录');
+}

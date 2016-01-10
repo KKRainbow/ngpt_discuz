@@ -28,10 +28,10 @@
             </div>
             <table class="riinfot" cellspacing="0" cellpadding="0">
                 <tbody class="riinfotbody">
-                <!--{loop $labels['fields'] $item}-->
+                <!--{loop $fields $key $item}-->
                 <tr class="riinfotr">
-                    <th class="riinfoth">{$item['desc']}</th>
-                    <td class="riinfotd">{$item['value']}</td>
+                    <th class="riinfoth">{$key}</th>
+                    <td class="riinfotd">{$item}</td>
                 </tr>
                 <!--{/loop}-->
                 </tbody>

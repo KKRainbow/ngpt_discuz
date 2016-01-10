@@ -67,6 +67,8 @@ function table_sort(obj,index)
         ctl && (ctl = ctl.childNodes[0]);
         ctl && (ctl = ctl.childNodes[1]);
         //ctl && (ctl.innerHTML = !originflag ? "&UpArrow;" : "&DownArrow;");
+        ctl && (ctl.innerHTML = !originflag ? "↗" : "↘");
+        /*
         if (ctl) {
             if (ctl.childNodes.length > 0) {
                 ctl.removeChild(ctl.childNodes[0]);
@@ -75,6 +77,7 @@ function table_sort(obj,index)
             n.src = ngpt_img_root + (!originflag ? 'peerlistup.png' : 'peerlistdown.png');
             ctl.appendChild(n);
         }
+        */
     }
 }
 //format 为 数据库列名称:显示名称
@@ -101,9 +104,11 @@ function BuildPeerListTable(json,format,prefix,root)
             //内容
             var a = document.createElement('a');
             a.innerHTML =  format[index][0];
+            J$(a).css('color', 'blue');
             th.appendChild(a);
             //升序降序箭头
             var span = document.createElement('span');
+            J$(span).css('color', 'blue');
             // 图标居中
             span.style.verticalAlign = 'middle';
             a.appendChild(span);
@@ -171,28 +176,19 @@ function formatSizeUnit(size)
 }
 //格式:  表名:[显示名称,内容预处理函数]
 var peerlistformat = {
-    "username" : ["用户名",function(name){
-        if(name == null)
-        {
-            return "匿名";
-        }
-        return name;
-    }],
-    "uid" : ["UID",null],
-    "lastupdate":["最后更新",function(time){
+    "user_id" : ["UID",null],
+    "update_time":["最后更新",function(time){
         return new Date(parseInt(time)*1000).toLocaleString();
     }],
-    "uploaded":["统计上传",formatSizeUnit],
-    "realup":["真实上传",formatSizeUnit],
-    "downloaded":["统计下载",formatSizeUnit],
-    "realdown":["真实下载",formatSizeUnit],
-    "ipv4":["ipv4地址",null],
-    "ipv4port":["ipv4端口",null],
-    "ipv6":["ipv6地址",null],
-    "ipv6port":["ipv6端口",null],
+    "real_up":["真实上传",formatSizeUnit],
+    "real_down":["真实下载",formatSizeUnit],
+    "ipv4_addr":["ipv4地址",null],
+    "ipv4_port":["ipv4端口",null],
+    "ipv6_addr":["ipv6地址",null],
+    "ipv6_port":["ipv6端口",null],
     "status":["下载状态",function(status){
-        return status=='leecher'?"正在下载":"正在做种";}],
-    "client":["客户端",function(cli){
+        return status=='Leecher'?"正在下载":"正在做种";}],
+    "client_tag":["客户端",function(cli){
         return cli.substr(1,2);
     }]
 
@@ -205,15 +201,15 @@ var historylistformat = {
         }
         return name;
     }],
-    "uid" : ["UID",null],
-    "downdate":["开始下载时间",function(time){
+    "user_id" : ["UID",null],
+    "create_time":["开始下载时间",function(time){
         return new Date(parseInt(time)*1000).toLocaleString();
     }],
-    "uploaded":["统计上传",formatSizeUnit],
-    "realup":["真实上传",formatSizeUnit],
-    "downloaded":["统计下载",formatSizeUnit],
-    "realdown":["真实下载",formatSizeUnit],
-    "lastupdate":["最后更新",function(time){
+    "stat_up":["统计上传",formatSizeUnit],
+    "real_up":["真实上传",formatSizeUnit],
+    "stat_down":["统计下载",formatSizeUnit],
+    "real_down":["真实下载",formatSizeUnit],
+    "update_time":["最后更新",function(time){
         return new Date(parseInt(time)*1000).toLocaleString();
     }]
 };

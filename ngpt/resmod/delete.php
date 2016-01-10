@@ -53,6 +53,16 @@ $seed_not_exists = 0;
 $thread_not_exists = 0;
 $succeed = 0;
 
+function deleteThreadAndSeed($tid)
+{
+    $tbl = DB::table("ngpt_seed");
+    $sql = <<<SQL
+DELETE FROM {$tbl} WHERE tid=$tid;
+SQL;
+    DB::query($sql);
+    deletethread(array($tid));
+}
+
 foreach ($tids as $tid) {
     $tbl = DB::table("ngpt_seed");
     $sql = <<<SQL
@@ -63,7 +73,7 @@ SQL;
     $penalty = $_POST['penalty'];
 
     if (empty($seed) || empty($seed['seed_id'])) {
-        deletethread(array($tid));
+        deleteThreadAndSeed($tid);
         $seed_not_exists++;
         continue;
     }
@@ -82,7 +92,7 @@ SQL;
 
     if ($res['result'] != 'success') {
         if ($res['reason'] == 'not exists') {
-            deletethread(array($tid));
+            deleteThreadAndSeed($tid);
             $seed_not_exists++;
             continue;
         } else {
@@ -144,7 +154,7 @@ SQL;
 
         // 删除帖子
         //require_once libfile('function/post');
-        deletethread(array($tid));
+        deleteThreadAndSeed($tid);
         // 该函数在10站上运行似乎有问题，还是将记录存在种子操作记录表里吧
         // 2015-05-26 好像不是此函数的问题，注释掉后照样会发生
         // 2015-05-27 好吧确实是这个的问题，注释掉

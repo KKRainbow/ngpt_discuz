@@ -107,7 +107,11 @@
         function modthreads(optgroup, operation) {
             var operation = !operation ? '' : operation;
             <!--{if isThreadSeed()}-->
-            $('modactions').action = 'source/plugin/ngpt/admin.php?&fid=' + fid + '&moderate[]=' + tid + '&infloat=yes&nopost=yes' + (optgroup != 3 && optgroup != 2 ? '&from=' + tid : '');
+            if (optgroup == 99) {
+                $('modactions').action = 'source/plugin/ngpt/admin.php?&fid=' + fid + '&moderate[]=' + tid + '&infloat=yes&nopost=yes' + (optgroup != 3 && optgroup != 2 ? '&from=' + tid : '');
+            } else {
+                $('modactions').action = 'forum.php?mod=topicadmin&action=moderate&fid=' + fid + '&moderate[]=' + tid + '&handlekey=mods&infloat=yes&nopost=yes' + (optgroup != 3 && optgroup != 2 ? '&from=' + tid : '');
+            }
             <!--{else}-->
             $('modactions').action = 'forum.php?mod=topicadmin&action=moderate&fid=' + fid + '&moderate[]=' + tid + '&handlekey=mods&infloat=yes&nopost=yes' + (optgroup != 3 && optgroup != 2 ? '&from=' + tid : '');
             <!--{/if}-->
@@ -124,12 +128,12 @@
 		<!--{eval $modopt=0;}-->
 		<!--{if $_G['forum']['ismoderator']}-->
 			<!--{if $_G['group']['allowdelpost']}--><!--{eval $modopt++}-->
-                <a href="javascript:;" onclick="modthreads(3, 'delete')">
+                <a href="javascript:;" onclick="modthreads(99, 'delete')">
                     {lang modmenu_deletethread}
                 </a>
                 <span class="pipe">|</span>
                 <!--{if isThreadSeed()}-->
-                    <a href="javascript:;" onclick="modthreads(3, 'setcoef')">
+                    <a href="javascript:;" onclick="modthreads(99, 'setcoef')">
                         修改系数
                     </a>
                     <span class="pipe">|</span>

@@ -20,7 +20,7 @@
 
     function showResDisplay(op) {
         $('postresinfo').value = op;
-        setAttr($('resinfo'), 'action', 'resinfodisplay.php?action=display');
+        setAttr($('resinfo'), 'action', 'source/plugin/ngpt/resinfo.php?action=display');
         switch(op)
         {
             case 'fileinfo':
@@ -45,9 +45,7 @@
 </script>
 <form style="display: none;" id="resinfo" method="post" action="">
     <!-- 不知为什么，action 要保留 -->
-    <input type="hidden" name="fid" value="{$fid}"/>
-    <input type="hidden" name="tid" value="{$tid}"/>
-    <input type="hidden" name="infohash" value="{$infohash}"/>
+    <input type="hidden" name="seed_id" value="{$seedid}"/>
     <input type="hidden" name="op" id="postresinfo" value=""/>
 </form>
 <link rel="stylesheet" type="text/css" href="source/plugin/ngpt/template/resthread-view.css"/>
