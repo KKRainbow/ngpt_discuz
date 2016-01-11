@@ -1,5 +1,6 @@
 <!--{eval}-->
-$email_verification_status = check_email_verification_status();
+$email_verification_status = 1;//check_email_verification_status();
+$img_root = $_G['ngpt_root'];
 <!--{/eval}-->
 <link rel="stylesheet" type="text/css" href="source/plugin/ngpt/template/userstat.css"/>
 <div>
@@ -79,13 +80,13 @@ $email_verification_status = check_email_verification_status();
                                     </td>
                                 </tr>
                                 <tr class="updownrow">
-                                    <td class="updownpic"><img src="static/image/ngpt/upload_64sq.png" width="18"
+                                    <td class="updownpic"><img src="{$img_root}static/image/userstat/upload_64sq.png" width="18"
                                                                height="20"/></td>
                                     <td class="updowninfoheader uploadcount">统计上传:</td>
                                     <td class="updowninfo" id="s_up">
                                         {$s_up_str}
                                     </td>
-                                    <td class="updownpic"><img src="static/image/ngpt/upload_64sq.png" width="18"
+                                    <td class="updownpic"><img src="{$img_root}static/image/userstat/upload_64sq.png" width="18"
                                                                height="20"/></td>
                                     <td class="updowninfoheader normalupdowncount">真实上传:</td>
                                     <td class="updowninfo" id="r_up">
@@ -93,13 +94,13 @@ $email_verification_status = check_email_verification_status();
                                     </td>
                                 </tr>
                                 <tr class="updownrow">
-                                    <td class="updownpic"><img src="static/image/ngpt/download_64sq.png" width="18"
+                                    <td class="updownpic"><img src="{$img_root}static/image/userstat/download_64sq.png" width="18"
                                                                height="20"/></td>
                                     <td class="updowninfoheader downloadcount">统计下载:</td>
                                     <td class="updowninfo" id="s_down">
                                         {$s_down_str}
                                     </td>
-                                    <td class="updownpic"><img src="static/image/ngpt/download_64sq.png" width="18"
+                                    <td class="updownpic"><img src="{$img_root}static/image/userstat/download_64sq.png" width="18"
                                                                height="20"/></td>
                                     <td class="updowninfoheader normalupdowncount">真实下载:</td>
                                     <td class="updowninfo" id="r_down">
@@ -208,3 +209,9 @@ $email_verification_status = check_email_verification_status();
         </tr>
     </table>
 </div>
+<script>
+    J$('form').submit(function() {
+        showError('功能尚未实现');
+        return false;
+    });
+</script>

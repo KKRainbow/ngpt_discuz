@@ -1,7 +1,26 @@
 <!--{block return}-->
 <link rel="stylesheet" type="text/css" href="{$_G['siteroot']}source/plugin/ngpt/template/hooks/global/cpnav_extra1.css"/>
+<span class="sep">|</span>
 <span>
             <img class="valigncenter" src="{$imgroot}coeffup.png"/>统计上传: {$u_str} <img class="valigncenter" src="{$imgroot}coeffdown.png"/>统计下载: {$d_str}
             <span>共享率: <span style="color: {$s_share_ratio_color_str};">{$s_share_ratio_str}</span></span>
+</span>
+<span class="sep">|</span>
+<span style="color: darkgreen">
+    正在做种&nbsp;
+    <span>$_G['user_info']['seeder_count']</span>
+</span>
+<span style="color: darkred">
+    正在下载&nbsp;
+    <span>$_G['user_info']['leecher_count']</span>
+</span>
+<span class="sep">|</span>
+<span style="color: cadetblue">
+    已完成&nbsp;
+    <span>$_G['user_info']['completed_count']</span>
+</span>
+<span style="color: darkgrey">
+    下载数&nbsp;
+    <span>$_G['user_info']['downloaded_count']</span>
 </span>
 <!--{/block}-->

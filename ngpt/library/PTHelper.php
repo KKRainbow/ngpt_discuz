@@ -185,9 +185,37 @@ SQL;
         return in_array($fid, $resfid);
     }
 
+    /**
+     * @return false|string 注册失败则返回false，成功返回passkey
+     */
+    private static function registerUser()
+    {
+        global $_G;
+        if (empty($_G['uid']) || intval($_G['uid']) <= 0) {
+            return false;
+        }
+        $url = $api = $_G['ngpt']['api'] . 'user/add' . '&password=' . $_G['ngpt']['add_user_password'];
+        $url .= '&discuz_uid=' . $_G['uid'];
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Accept: application/json; q=1.0, */*; q=0.1",
+        ]);
+        $res = json_decode(curl_exec($ch), true);
+        if (empty($res) || $res['result'] != 'succeed') {
+            return false;
+        } else {
+            return $res['extra']; //passkey
+        }
+    }
+
     public static function getPassKey()
     {
         global $_G;
+        if ($_G['uid'] <= 0) {
+            return null;
+        }
         if (empty($_G['passkey'])) {
             //获取用户passkey
             $tbn = DB::table("ngpt_user");
@@ -196,9 +224,24 @@ SELECT passkey FROM {$tbn} WHERE uid={$_G['uid']};
 SQL;
             $arr = DB::fetch_first($sql);
             if (!$arr) {
-                return null;
+                //表里没找到，要向种子服务器注册
+                $passkey = static::registerUser();
+                if ($passkey === false) {
+                    return null;
+                }
+
+                $sql = <<<SQL
+INSERT INTO {$tbn}(uid, passkey) VALUES('{$_G['uid']}', '{$passkey}');
+SQL;
+                $res = DB::query($sql);
+                //插入失败
+                if ($res === false) {
+                    return null;
+                }
+                $_G['passkey'] = $passkey;
+            } else {
+                $_G['passkey'] = $arr['passkey'];
             }
-            $_G['passkey'] = $arr['passkey'];
         }
         return $_G['passkey'];
     }

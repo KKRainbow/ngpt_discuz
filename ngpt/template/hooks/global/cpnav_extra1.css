@@ -18,3 +18,10 @@ img.valigncenter {
 #toptb a.nopadding {
     padding: 0;
 }
+
+#toptb .sep
+{
+    color: #CCCCCC;
+    margin-left: 4px;
+    margin-right: 2px;
+}

@@ -23,7 +23,7 @@ function isThreadSeed()
     return $_isThreadSeed;
 }
 if ($_G['uid']) {
-        $user_info = PTHelper::getApiCurl('user/info');
+        $user_info = PTHelper::getApiCurl('user/info', ['detail' => true]);
         $_G['user_info'] = $user_info;
 }
 $_G['ngpt_root'] = $_G['siteurl'] . 'source/plugin/ngpt/';

@@ -10,4 +10,5 @@ global $_G;
 $_G['ngpt'] = [
     "api" => "http://127.0.0.1/seed/index.php?r=",
     'dir' => DISCUZ_ROOT . "source/plugin/ngpt/",
+    'add_user_password' => 'ngpt_2333',
 ];
