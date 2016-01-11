@@ -96,7 +96,7 @@ class threadplugin_ngpt
             case 'exists':
                 $t_qresult = DB::fetch_first("SELECT tid FROM " .
                     DB::table('ngpt_seed') .
-                    " WHERE seed_id='{$res['seed_id']}'");
+                    " WHERE seed_id='{$res['extra']}'");
                 showmessage(
                     '种子已存在，即将跳转。',
                     $_G['siteroot'] .

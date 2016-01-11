@@ -131,10 +131,14 @@ if(!empty($searchid)) {
         }
     }
 
+    $todaytime = strtotime(dgmdate(TIMESTAMP, 'Ymd'));
     $threadlist = $posttables = array();
     foreach(C::t('forum_thread')->fetch_all_by_tid_fid_displayorder(explode(',',$index['ids']), null, 0, null, $start_limit, $_G['tpp'], '>=', $ascdesc) as $thread) {
         $thread['subject'] = bat_highlight($thread['subject'], $keyword);
         $thread['realtid'] = $thread['isgroup'] == 1 ? $thread['closed'] : $thread['tid'];
+
+        $thread['allreplies'] = $thread['replies'] + $thread['comments'];
+
         $threadlist[$thread['tid']] = procthread($thread, 'dt');
         $posttables[$thread['posttableid']][] = $thread['tid'];
     }

@@ -270,6 +270,9 @@ SQL;
         $api = static::getApiUrl($interface);
 
         if (empty($api)) {
+            if ($_G['uid'] <= 0) {
+                showmessage('请先登录', $_G['siteurl']);
+            }
             throw new Exception("无法获取api地址，是否登录？");
         }
 
