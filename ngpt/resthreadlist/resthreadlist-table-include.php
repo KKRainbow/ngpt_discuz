@@ -58,6 +58,9 @@ if (empty($res) || $res['result'] == 'failed') {
                 $s['coef_expire_time'] = '';
             }
         }
+
+        $s['live_time'] =
+            PTHelper::getReadableTimeFromMinutes($s['live_time'] / 60);
     }
 }
 

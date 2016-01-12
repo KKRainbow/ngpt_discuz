@@ -7,11 +7,12 @@
  */
 
 define('APPTYPEID', 2);
-define('CURSCRIPT', 'search');
-define('CURMODULE', 'seed');
+define('CURSCRIPT', 'forum');
+define('CURMODULE', 'forumdisplay');
 
 
 require 'class_core.inc.php';
+runhooks();
 
 define('NOROBOT', TRUE);
 
@@ -38,7 +39,7 @@ function ShowSearchFailMessage($msg = "")
 }
 //获取各项搜索参数
 $srchmod = 30;
-$cachelife_time = 1;		// Life span for cache of searching in specified range of time
+$cachelife_time = 3600;		// Life span for cache of searching in specified range of time
 $cachelife_text = 3600;		// Life span for cache of text searching
 $mod = $_GET['mod'];
 
@@ -86,6 +87,7 @@ $searchsubmit = getgpc('searchsubmit') == 'yes' || getgpc('searchsubmit') == 'tr
 //分解查询框内容形成关键字
 $keyword = isset($srchtxt) ? dhtmlspecialchars(trim($srchtxt)) : '';
 $keyword = $keyword?:getgpc('kw');
+$keywordenc = htmlentities($keyword);
 
 if(!$searchsubmit)
 {
@@ -150,7 +152,7 @@ if(!empty($searchid)) {
         }
 
     }
-    $multipage = multi($index['num'], $_G['tpp'], $page, "search.php?".
+    $multipage = multi($index['num'], $_G['tpp'], $page, "source/plugin/ngpt/search.php?".
         "mod=seed&".
         "searchid=$searchid&".
         "orderby=$orderby&".

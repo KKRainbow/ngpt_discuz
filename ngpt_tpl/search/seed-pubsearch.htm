@@ -13,7 +13,7 @@
                 <!--{eval $slist=[]}-->
                 <!--{if $_G['setting']['search']['forum']['status'] && ($_G['group']['allowsearch'] & 2 || $_G['adminid'] == 1)}-->
                     <!--{block slist[seed]}-->
-                    <a href="source/plugin/ngpt/search.php?{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'seed'} class="a"{/if}>
+                    <a style="font-weight: bolder" href="source/plugin/ngpt/search.php?{if $keyword}&srchtxt=$keywordenc&searchsubmit=yes{/if}"{if CURMODULE == 'seed'} class="a"{/if}>
                         种子
                     </a>
                     <!--{/block}-->
@@ -36,7 +36,7 @@
                 <div id="srhoption">
                     <div style="clear:left;float:right;">
                         <label class="lb"><input type="checkbox" class="pr" name="bluefilter" value="onlyblue" <!--{if $onlyblue}-->checked="checked"<!--{/if}-->/>只搜索蓝种</label>
-                        <label class="lb"><input type="checkbox" class="pr" name="deadfilter" value="nodead" <!--{if $nodead||!($_GET['searchsubmit']=='yes')}-->checked="checked"<!--{/if}-->/>忽略死种</label>
+                        <label class="lb"><input type="checkbox" class="pr" name="deadfilter" value="nodead" <!--{if $nodead}-->checked="checked"<!--{/if}-->/>忽略死种</label>
                     </div>
                     <div id="advsearchb" style="clear:left;">
                         <a style="cursor: pointer;">

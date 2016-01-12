@@ -281,9 +281,11 @@
 												<span class="fromg xg1"> [{lang from}: <a href="forum.php?mod=group&fid={$groupnames[$thread[tid]][fid]}" target="_blank" class="xg1">{$groupnames[$thread[tid]][name]}</a>]</span>
 											<!--{/if}-->
 										<!--{/if}-->
-                                        <span class="upcoe_span" coef="{$seed['up_coef']}"></span>
-                                        <span class="downcoe_span" coef="{$seed['down_coef']}"></span>
-                                        <span>{$seed['coef_expire_time']}</span>
+                                        <span style="float:right">
+                                            <span class="upcoe_span" coef="{$seed['up_coef']}"></span>
+                                            <span class="downcoe_span" coef="{$seed['down_coef']}"></span>
+                                            <span>{$seed['coef_expire_time']}</span>
+                                        </span>
 									</th>
 									<!--{if CURMODULE == 'guide'}-->
 										<td class="by"><a href="forum.php?mod=forumdisplay&fid=$thread[fid]" target="_blank">$forumnames[$thread[fid]]['name']</a></td>

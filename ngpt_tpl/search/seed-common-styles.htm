@@ -1,10 +1,10 @@
-<!-- TODO: 不应引用临时文件 -->
-<link rel="stylesheet" type="text/css" href="../../../../data/cache/style_1_forum.css" />
-<link rel="stylesheet" type="text/css" href="../../../../data/cache/style_1_forum_forumdisplay.css" />
-<link rel="stylesheet" type="text/css" href="../../../../data/cache/style_1_forum_viewthread.css" />
 <style type="text/css">
     /*<!--隐藏forum_displaylist中底部的两个按钮-->*/
     a#newspecialtmp,span#visitedforumstmp
+    {
+        display:none;
+    }
+    #pgbtn
     {
         display:none;
     }
@@ -38,4 +38,22 @@
     {
         text-align: left;
     }
+    /** search **/
+    #toptb { padding: 0 15px; border-bottom: 1px solid #EFEFEF; }
+    #ct { margin: 0 20px; }
+    #scform h1 { margin-right: 20px; }
+    #scform_tb a { float: left; display: inline; margin: 0 15px 0 3px; height: 26px; line-height: 26px; }
+    #scform_tb .y a { margin: 0 3px 0 15px; }
+    #scform_tb .a  { background: url({IMGDIR}/searchbar.png) no-repeat 50% 100%; color: #333; font-weight: 700; }
+    #scform_form { background: url({IMGDIR}/searchbar.png) repeat-x 0 0; }
+    .td_srchtxt { background: url({IMGDIR}/searchbar.png) no-repeat 0 -35px; }
+    .td_srchbtn { background: url({IMGDIR}/searchbar.png) no-repeat 0 -70px; }
+    #scform_srchtxt { padding: 0 10px; width: 460px; background: transparent; outline: none; }
+    #scform_submit { width: 107px; opacity: 0; filter: alpha(opacity=0); cursor: pointer; }
+    #scform_srchtxt, #scform_submit { height: 35px; border: none; }
+    .ie_all #scform_srchtxt { height: 33px; line-height: 33px; }
+    .sttl { margin: 10px 0; padding: 5px; border-bottom: 1px solid #CCC; background: #F5F5F5; }
+    #nv_search #ft { margin: 20px; text-align: center; }
+    .pg { float: none; }
+
 </style>
