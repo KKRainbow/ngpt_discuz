@@ -56,7 +56,10 @@ $srchfrom /= 3600 * 24;//换算成天数
 //之前还是之后?
 $before = intval(getgpc('before'));
 //搜索的板块
-$srchfid = getgpc('srchfid');
+$srchfid = getgpc('srhfid');
+if (empty($srchfid)) {
+   $srchfid = getgpc('srchfid');
+}
 //是否只要蓝种
 $onlyblue = getgpc('bluefilter') == 'onlyblue';
 //不查看死种
@@ -124,7 +127,7 @@ if(!empty($searchid)) {
     $modfid = 0;
     if($keyword) {
         $modkeyword = str_replace(' ', ',', $keyword);
-        $fids = explode(',', str_replace('\'', '', $searchstring[5]));
+        $fids = explode('M', str_replace('\'', '', $searchstring[5]));
         if(count($fids) == 1 && in_array($_G['adminid'], array(1,2,3))) {
             $modfid = $fids[0];
             if($_G['adminid'] == 3 && !C::t('forum_moderator')->fetch_uid_by_fid_uid($modfid, $_G['uid'])) {
@@ -196,7 +199,9 @@ else
     $fids = $comma = '';
     foreach($_G['cache']['forums'] as $fid => $forum) {
         if($forum['type'] != 'group' && (!$forum['viewperm'] && $_G['group']['readaccess']) || ($forum['viewperm'] && forumperm($forum['viewperm']))) {
-            if(!$forumsarray || in_array($fid, $forumsarray)) {
+            if(!$forumsarray || in_array($fid, $forumsarray) || in_array($forum['fup'], $forumsarray)) {
+                //把下级板块添加进来
+                $forumsarray[] = $fid;
                 $fids .= "$comma'$fid'";
                 $comma = ',';
             }
@@ -230,7 +235,7 @@ else
             $searchindex = array('id' => $index['searchid'], 'dateline' => $index['dateline']);
             break;
         } elseif($_G['adminid'] != '1' && $index['flood']) {
-            showmessage('search_ctrl', 'search.php?mod=seed', array('searchctrl' => $_G['setting']['search']['forum']['searchctrl']));
+            showmessage('search_ctrl', 'source/plugin/ngpt/search.php', array('searchctrl' => $_G['setting']['search']['forum']['searchctrl']));
         }
     }
     //如果在数据库里找到了这条记录,我们就直接跳到第二步:GET请求

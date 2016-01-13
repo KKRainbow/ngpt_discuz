@@ -612,7 +612,7 @@
                 e.append("<img style=\"vertical-align: sub;\" src=\"/source/plugin/ngpt/static/image/coeffdown.png\">" +
                         coef + "%");
                 if (coef == 0) {
-                    var tmp = e.siblings('a');
+                    var tmp = e.parent().siblings('a');
                     tmp.css('color', 'blue');
                 }
             }
