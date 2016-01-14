@@ -890,6 +890,10 @@ function TypeidObserver(json,root,sub)
                 _my_threadtypes[index]!=value&&
                 index<_my_threadtypes.length;index++);
             var tar = json[index];
+            if (tar == undefined) {
+                showError("请首先选择分类");
+                return;
+            }
 
             //未选择分类
             if (index >= _my_threadtypes.length) {
