@@ -138,5 +138,10 @@ if ($t_cdstate_b) {
 if ($t_cdstate_b) {
     $passkey = $detail_info['passkey'];
     $fulltracker = PTHelper::getApiUrl('tracker/announce');
+    $fulltracker = preg_replace(
+        "/127.0.0.1/",
+        $_SERVER['SERVER_ADDR'],
+        $fulltracker
+    );
 }
 

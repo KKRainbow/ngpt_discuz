@@ -340,6 +340,13 @@ HTML;
                 'seed_id' => $record_seed['seed_id'],
             ]
         );
+
+        $downseedpageurl = preg_replace(
+            "/127.0.0.1/",
+            $_SERVER['SERVER_ADDR'],
+            $downseedpageurl
+        );
+
         $candownloadstatus  = 'normal';
         $return = null;
         include template('ngpt:resthread-view');

@@ -427,6 +427,37 @@ SQL;
             return $res['extra'][0];
         }
     }
+
+    public static function getUserInfo($uid)
+    {
+        $key_u = 'ui' . $uid;
+        $key_t = 'uitime' . $uid;
+        loadcache([$key_t, $key_u]);
+        $user_info = null;
+        if (!empty($_G['cache'][$key_t]) && !empty($_G['cache'][$key_u])) {
+            $user_info = json_decode($_G['cache'][$key_u], true);
+            $time = intval($_G['cache'][$key_t]);
+            if ($time < time()) {
+                $user_info = null;
+            }
+        }
+        if (empty($user_info)) {
+            $user_info = PTHelper::getApiCurl('user/info', ['detail' => true]);
+            savecache($key_u, json_encode($user_info));
+            savecache($key_t, time() + 120);
+            $tbl = DB::table('common_member_count');
+            $up = $user_info['stat_up'] >> 20;
+            $down = $user_info['stat_down'] >> 20;
+            $sql = <<<EOF
+UPDATE $tbl SET
+  extcredits2='{$up}',
+  extcredits3='{$down}'
+  WHERE uid='$uid';
+EOF;
+            $ret = DB::query($sql);
+        }
+        return $user_info;
+    }
 }
 
 ?>

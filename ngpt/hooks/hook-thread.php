@@ -32,15 +32,16 @@ class plugin_ngpt_forum extends plugin_ngpt
      */
     function viewthread_sidebottom()
     {
+        global $_G;
         $up = $_G['user_info']['stat_up'];
         $down = $_G['user_info']['stat_down'];
-        $up >>= 10;
-        $down >>= 10;
+        $up = PTHelper::getReadableFileSize($up);
+        $down = PTHelper::getReadableFileSize($down);
 
         $script = <<<HTML
         <dl class="pil cl">
-        <dt>统计上传</dt><dd>$up MB</dd>
-        <dt>统计下载</dt><dd>$down MB</dd>
+        <dt>统计上传</dt><dd>$up</dd>
+        <dt>统计下载</dt><dd>$down</dd>
         </dl>
         <br/>
 HTML;
