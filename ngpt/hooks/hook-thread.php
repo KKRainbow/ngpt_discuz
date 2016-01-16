@@ -32,6 +32,7 @@ class plugin_ngpt_forum extends plugin_ngpt
      */
     function viewthread_sidebottom()
     {
+        return [];
         global $_G;
         $up = $_G['user_info']['stat_up'];
         $down = $_G['user_info']['stat_down'];
