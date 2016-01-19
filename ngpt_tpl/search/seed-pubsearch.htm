@@ -29,7 +29,7 @@
             <div>
                 <table id="scform_form" cellspacing="0" cellpadding="0" style="float:left;">
                     <tr>
-                        <td class="td_srchtxt"><input type="text" id="scform_srchtxt" name="srchtxt" size="45" maxlength="40" value="$keyword" tabindex="1" x-webkit-speech speech /><script type="text/javascript">$('scform_srchtxt').focus();</script></td>
+                        <td class="td_srchtxt"><input type="text" id="scform_srchtxt" name="srchtxt" size="45" maxlength="40" value="{eval echo $_GET['srchtxt'];}" tabindex="1" x-webkit-speech speech /><script type="text/javascript">$('scform_srchtxt').focus();</script></td>
                         <td class="td_srchbtn"><input type="hidden" name="searchsubmit" value="yes" /><button type="submit" id="scform_submit" class="schbtn"><strong>{lang search}</strong></button></td>
                     </tr>
                 </table>

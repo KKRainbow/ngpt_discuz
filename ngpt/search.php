@@ -116,7 +116,7 @@ if(!empty($searchid)) {
     }
 
     $keyword = dhtmlspecialchars($index['keywords']);
-    $keyword = $keyword != '' ? str_replace('+', ' ', $keyword) : '';
+    //$keyword = $keyword != '' ? str_replace('+', ' ', $keyword) : '';
 
     $index['keywords'] = rawurlencode($index['keywords']);
     $searchstring = explode('|', $index['searchstring']);
