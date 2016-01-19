@@ -137,24 +137,25 @@ if(!empty($searchid)) {
     }
 
     $todaytime = strtotime(dgmdate(TIMESTAMP, 'Ymd'));
-    $threadlist = $posttables = array();
-    foreach(C::t('forum_thread')->fetch_all_by_tid_fid_displayorder(explode(',',$index['ids']), null, 0, null, $start_limit, $_G['tpp'], '>=', $ascdesc) as $thread) {
-        $thread['subject'] = bat_highlight($thread['subject'], $keyword);
-        $thread['realtid'] = $thread['isgroup'] == 1 ? $thread['closed'] : $thread['tid'];
-
-        $thread['allreplies'] = $thread['replies'] + $thread['comments'];
-
-        $threadlist[$thread['tid']] = procthread($thread, 'dt');
-        $posttables[$thread['posttableid']][] = $thread['tid'];
-    }
-    if($threadlist) {
-        foreach($posttables as $tableid => $tids) {
-            foreach(C::t('forum_post')->fetch_all_by_tid($tableid, $tids, true, '', 0, 0, 1) as $post) {
-                $threadlist[$post['tid']]['message'] = bat_highlight(messagecutstr($post['message'], 200), $keyword);
+    $threadlist = array();
+    $tids = explode(',',$index['ids']);
+    $threads = C::t('forum_thread')->fetch_all_by_tid($tids, $start_limit, $_G['tpp']);
+    //tids是有序的，但是查出来的threads是无序的。
+    foreach ($tids as $tid) {
+        foreach($threads as $thread) {
+            if ($thread['tid'] != $tid) {
+                continue;
             }
-        }
+            $thread['subject'] = bat_highlight($thread['subject'], $keyword);
+            $thread['realtid'] = $thread['isgroup'] == 1 ? $thread['closed'] : $thread['tid'];
 
+            $thread['allreplies'] = $thread['replies'] + $thread['comments'];
+
+            $threadlist[] = procthread($thread, 'dt');
+            break;
+        }
     }
+
     $multipage = multi($index['num'], $_G['tpp'], $page, "source/plugin/ngpt/search.php?".
         "mod=seed&".
         "searchid=$searchid&".
@@ -329,7 +330,7 @@ SQL;
             foreach ($res as $seed) {
                 if ($seed['seed_id'] == $id) {
                     $seed_ordered_list[] = $seed['tid'];
-                    continue;
+                    break;
                 }
             }
         }
