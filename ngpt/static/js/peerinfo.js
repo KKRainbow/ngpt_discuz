@@ -172,7 +172,7 @@ function formatSizeUnit(size)
         size /= 1024;
         index++;
     }
-    return Math.round(size*100)/100 + u[index];
+    return Math.round(size*100)/100 + " " + u[index];
 }
 //格式:  表名:[显示名称,内容预处理函数]
 var peerlistformat = {

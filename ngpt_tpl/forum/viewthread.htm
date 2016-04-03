@@ -532,4 +532,11 @@ fixed_avatar([<!--{echo implode(',', array_keys($postlist))}-->], {if empty($_G[
 fixed_top_nv();
 <!--{/if}-->
 </script>
+
+<script type="application/javascript">
+	J$(".need_format").each(function(){
+		var v = J$(this).text().replace(/[^0-9]/ig, "");
+		J$(this).text(formatSizeUnit(parseInt(v)));
+	});
+</script>
 <!--{template common/footer}-->
