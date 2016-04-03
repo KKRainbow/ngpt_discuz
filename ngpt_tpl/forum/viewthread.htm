@@ -536,7 +536,7 @@ fixed_top_nv();
 <script type="application/javascript">
 	J$(".need_format").each(function(){
 		var v = J$(this).text().replace(/[^0-9]/ig, "");
-		J$(this).text(formatSizeUnit(parseInt(v)));
+		J$(this).text(formatSizeUnit(parseFloat(v) * 1024 * 1024));
 	});
 </script>
 <!--{template common/footer}-->
